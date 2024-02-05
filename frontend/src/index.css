@@ -6,9 +6,10 @@
 } */
 :root{
   --background-color : black ;
-  --circle-light : #448ffe ;
+  --circle-light : rgba(68, 143, 254 ,1) ;
   --circle-dark : #99ffff00 ;
   --second-background-color: rgba(23,22,23,0.8);
+  --border-radius:20px;
 }
 
 * {
@@ -32,4 +33,10 @@ body {
 
 #root{
   height: 10000px;
+}
+
+.container{
+  background-color: var(--second-background-color);
+  border-radius: var(--border-radius);
+  display: flex;
 }
