@@ -1,0 +1,11 @@
+.contentbar{
+    position: fixed;
+    height: 90vh;
+    width: 76vw;
+    top:5%;
+    right:3%;
+    background-color: var(--second-background-color);
+    border: 1px solid transparent;
+    border-radius: 20px;
+
+}
