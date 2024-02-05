@@ -1,0 +1,20 @@
+/*
+    height: 90vh;
+    width: 15vw;
+
+*/
+.side-button{
+    display: flex;
+    margin-top: 4vh;
+    width: 13vw;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.side-button > img{
+    margin-right: 20px;
+}
+.side-button.toggled{
+    color: var(--circle-light);
+}
