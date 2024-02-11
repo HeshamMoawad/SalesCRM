@@ -1,13 +1,9 @@
 from django.apps import AppConfig
 
-class UsersConfig(AppConfig):
 
+class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'users'
+    verbose_name_plural = 'Login'
+    verbose_name = 'Logins'
 
-    def ready(self) -> None:
-        from .signals import (
-            createUserConfigSignal
-        )   
-
-        return super().ready()
