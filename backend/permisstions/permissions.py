@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-from .models import BaseUser
+from ..users.models import BaseUser
 
 class IsManager(BasePermission):
     def has_permission(self, request, view):
