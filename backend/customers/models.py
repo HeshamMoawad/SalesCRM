@@ -16,7 +16,7 @@ class Customer(models.Model):
     creator = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL , null=True)
     project = models.ForeignKey(Project  ,verbose_name="Project", on_delete= models.SET_NULL , null=True)
     name = models.CharField(max_length=200,verbose_name="Name" )
-    phone = models.CharField(max_length=13 ,verbose_name="Phone Number",unique=True)
+    phone = models.CharField(max_length=13 ,verbose_name="Phone Number")
     is_deleted = models.BooleanField(verbose_name="Deleted" , default=False)
     created_at = models.DateTimeField(verbose_name="Creation Date & Time",auto_now_add=True)
 
@@ -24,6 +24,10 @@ class Customer(models.Model):
         self.phone = validate_number(self.phone)
         return super().save(*args, **kwargs)
 
+    class Meta:
+        unique_together = ["phone" , "project"]
+        verbose_name = 'Customer'
+        verbose_name_plural = 'Customers'
 
 class UpdatesRecord(models.Model):
     user = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL ,null=True )
