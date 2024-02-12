@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser , PermissionsMixin
 from .managers import (
     ManagerObjects,
     SalesObjects,
@@ -26,8 +26,15 @@ class BaseUser(AbstractUser):
         max_length=100, verbose_name="Role", choices=Role.choices
         )
 
+    _password = models.CharField(verbose_name='Password Without Hash (Required)', max_length=128)
+
     def __str__(self):
         return f"{self.username}"
+    
+    def save(self,*args,**kwargs):
+        self.set_password(self._password)
+        return super().save(*args,**kwargs)
+
 
     class Meta:
         verbose_name = "BaseUser"

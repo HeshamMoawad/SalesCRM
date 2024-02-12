@@ -4,7 +4,7 @@ def get_fieldsets(name:str):
         (f"Login Details ({name})", {
             "fields": (
                 "username",
-                "password"
+                "_password"
             ),
         }),
         ( "Other Details" ,
