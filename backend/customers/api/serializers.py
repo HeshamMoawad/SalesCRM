@@ -1,14 +1,15 @@
 from rest_framework.serializers import  ModelSerializer , SerializerMethodField
-from ..models import Customer , UpdatesRecord
-
+from ..models import Customer , CustomerUpdatesRecord , Subscription , SubscriptionNote , SubscriptionUpdatesRecord
+from users.api.serializers import UserSerializer
 
 class UpdatesRecordSerializer(ModelSerializer):
     class Meta:
-        model = UpdatesRecord
+        model = CustomerUpdatesRecord
         fields = ['user', 'created_at']
 
 class CustomerSerializers(ModelSerializer):
     updates = UpdatesRecordSerializer(many=True, read_only=True)
+    creator = UserSerializer(read_only=True)
     class Meta:
         model = Customer
         fields = [
