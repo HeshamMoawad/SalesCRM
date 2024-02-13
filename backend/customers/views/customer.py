@@ -4,8 +4,8 @@ from utils import get_user_from_request , BaseUser
 from permissions import UserCrudPermissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
-from ..models import Customer
-from ..api.serializers import CustomerSerializers
+from ..models import Customer , Subscription
+from ..api.serializers import CustomerSerializer
 from django.core.exceptions import FieldError , ValidationError 
 from django.db.utils import IntegrityError
 
@@ -21,10 +21,10 @@ class CustomerAPIView(APIView):
         filters = request.GET.dict()
         try : 
             if user.is_superuser or user.role == user.Role.MANAGER :
-                customers = Customer.objects.filter(**filters)
+                customers = Customer.objects.filter(**filters).distinct()
             else :
-                customers = Customer.objects.filter(creator=user ,is_deleted=False ,**filters  ) | Customer.objects.filter(cs=user ,is_deleted=False, **filters)
-            customer_serializer = CustomerSerializers(customers , many=True)
+                customers = Customer.objects.filter(creator=user ,project=user.project, is_deleted=False , **filters ).distinct() | Customer.objects.filter(is_deleted=False ,project=user.project, subscription_customer__cs=user).distinct()
+            customer_serializer = CustomerSerializer(customers , many=True)
             return Response(customer_serializer.data)
         except FieldError as e :
             return Response({"message":"please enter corrent field name"})
@@ -45,7 +45,7 @@ class CustomerAPIView(APIView):
             new_customer.validate_unique()
             self.check_object_permissions(request,new_customer)
             new_customer.save()
-            return Response(CustomerSerializers(new_customer).data)
+            return Response(CustomerSerializer(new_customer).data)
         except ValidationError as e:
             return Response({"message": f"{e.error_dict['__all__'][0]}"})
         except IntegrityError :
@@ -74,7 +74,7 @@ class CustomerAPIView(APIView):
                     setattr(customer, key, value)
             self.check_object_permissions(request,customer)
             customer.save()
-            return Response(CustomerSerializers(customer).data)
+            return Response(CustomerSerializer(customer).data)
         except Customer.DoesNotExist :
             return Response({"message":"customer with this uuid not found"})
         except ValidationError as e:
@@ -89,7 +89,6 @@ class CustomerAPIView(APIView):
 
     # delete
     def delete(self,request:HttpRequest):
-        user:BaseUser = get_user_from_request(request)
         data:dict = request.data
         if 'uuid' not in data.keys():
             return Response({"message":"uuid must be in request to get customer and delete it"})
@@ -97,7 +96,7 @@ class CustomerAPIView(APIView):
             customer = Customer.objects.get(uuid=data["uuid"])
             self.check_object_permissions(request,customer)
             customer.delete()
-            return Response(CustomerSerializers(customer).data)
+            return Response(CustomerSerializer(customer).data)
         except Customer.DoesNotExist :
             return Response({"message":"customer with this uuid not found"})
         except ValidationError as e:
