@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import BaseUser , Manager , Project , Sales , CS
-from .utils import get_fieldsets
+from utils.users import get_fieldsets
 # Register your models here.
 
 

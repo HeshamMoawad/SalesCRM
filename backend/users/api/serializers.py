@@ -17,7 +17,6 @@ class UserSerializer(ModelSerializer):
             "username",
             "first_name",
             "project",
-            "is_staff",
             "is_active",
             "role",
         ]
