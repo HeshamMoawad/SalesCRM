@@ -14,7 +14,6 @@ class Customer(models.Model):
     name = models.CharField(max_length=200,verbose_name="Name" )
     phone = models.CharField(max_length=13 ,verbose_name="Phone Number")
     is_deleted = models.BooleanField(verbose_name="Deleted" , default=False)
-    cs = models.ForeignKey(BaseUser ,verbose_name="CS", on_delete=models.SET_NULL , null=True , related_name="customer_cs")
     created_at = models.DateTimeField(verbose_name="Creation Date & Time",auto_now_add=True)
 
     def save(self, *args, **kwargs) -> None:
@@ -33,13 +32,14 @@ class Customer(models.Model):
 class CustomerUpdatesRecord(models.Model):
     user = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL ,null=True )
     created_at = models.DateTimeField(verbose_name="Creation Date & Time",auto_now_add=True)
-    customer = models.ForeignKey(Customer ,verbose_name="Object", on_delete=models.CASCADE, related_name="customer_update" )
+    customer = models.ForeignKey(Customer ,verbose_name="Object", on_delete=models.CASCADE, related_name="customer_update")
 
 
 class Subscription(models.Model):
     uuid = models.CharField(verbose_name="UUID" , default=uuid4 ,max_length=200)
     creator = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL , null=True , related_name="subscription_creator")
     customer =  models.ForeignKey(Customer ,verbose_name="Customer", on_delete=models.CASCADE , null=True , related_name="subscription_customer")
+    cs = models.ForeignKey(BaseUser ,verbose_name="CS", on_delete=models.SET_NULL , null=True , related_name="subscription_cs")
     start_date = models.DateTimeField(verbose_name="Start Subscription Date")
     end_date = models.DateTimeField(verbose_name="End Subscription Date")
     price = models.IntegerField(verbose_name="Subscription Price")
@@ -55,9 +55,10 @@ class Subscription(models.Model):
         return super().save(*args, **kwargs)
 
 class SubscriptionNote(models.Model):
-    subscription = models.ForeignKey(Subscription ,verbose_name="Creator", on_delete=models.CASCADE ,null=True , related_name="subscription_note" )
+    subscription = models.ForeignKey(Subscription ,verbose_name="Subscription", on_delete=models.CASCADE ,null=True , related_name="subscription_note" )
+    creator = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL , null=True , related_name="subscription_note_creator")
     created_at = models.DateTimeField(verbose_name="Creation Date & Time",auto_now_add=True)
-    note = models.CharField(verbose_name="Note" , default=uuid4 ,max_length=600)
+    note = models.CharField(verbose_name="Note" ,max_length=600)
 
 class SubscriptionUpdatesRecord(models.Model):
     user = models.ForeignKey(BaseUser ,verbose_name="Creator", on_delete=models.SET_NULL ,null=True )
