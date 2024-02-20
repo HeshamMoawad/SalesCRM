@@ -1,0 +1,99 @@
+.edit-customer-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 90vh;
+    /* background-color: brown; */
+    border-radius: 20px;
+
+}
+.edit-form{
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: var(--second-background-color);
+    border-radius: 20px;
+    min-height: 80vh;
+    max-height: 80vh;
+
+    min-width: 60vw;
+}
+
+.edited{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    /* background-color: red; */
+    width: 50vw;
+    min-height: 35vh;
+    margin-top: 2%;
+}
+.edited div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 50vw;
+}
+.edited div label::after{
+    content: '';
+    display: block;
+    width: 10vw;
+    background-color: red;
+}
+
+
+.updates {
+    margin-top: 2%;
+    max-height: fit-content;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* border: 1px solid var(--circle-light); */
+    border-radius: 20px;
+}
+.updates .header{
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+}
+
+.updates div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 50vw;
+    border: 2px solid orange;
+    border-radius: 20px;
+    margin-top: 1%;
+}
+
+.edit-form input{
+    width: 20vw ;
+    height: 4vh;
+    border-radius: 20px;
+    border: 2px solid var(--circle-light);
+    background-color: transparent;
+    text-align: center;
+    margin: 5px;
+}
+.edit-form input:disabled{
+    border: none;
+}
+.edit-form label{
+    margin: 5px;
+    font-size: larger;
+}
+.btns{
+    min-height: 10vh;
+    /* background-color: yellow; */
+}
+
+
+
