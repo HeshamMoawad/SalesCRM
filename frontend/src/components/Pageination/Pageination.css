@@ -1,0 +1,27 @@
+.pageination-area{
+    position: absolute;
+    bottom: 0vh;
+    width: 76vw;
+    display: flexbox;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 4.8vh;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    /* background-color: blue;     */
+}
+.pageination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.next, 
+.prev,
+.current{
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    
+}
