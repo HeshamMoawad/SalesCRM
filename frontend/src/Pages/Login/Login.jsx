@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import request, { ADD_NEW, SUCCESS_STATUS_CODES } from "../../utils/requests";
-import { useAuth  , usePermission} from "../../Hooks";
+import { useAuth  , usePermission , saveLogin , savePermission} from "../../Hooks";
 import "./Login.css";
 
 
@@ -33,8 +33,14 @@ const Login = () => {
                 role: response.data.role,
                 isAuthenticated:true ,
             })
+            savePermission({
+                role: response.data.role,
+                isAuthenticated:true ,
+            })
             console.log(permission , "permission---login")
             setAuth(response.data);
+            saveLogin(response.data)
+
         }
     };
 
