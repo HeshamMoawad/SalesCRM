@@ -1,0 +1,113 @@
+.customer-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60vw;
+    min-height: 19vh;
+    background-color: var(--background-color);
+    border-radius: 20px;
+    margin: 5px;
+}
+@media screen and (max-height:780px){
+    .customer-card{
+        min-height: 20vh;
+    }
+    
+}
+.info{
+    /* background-color: blue; */
+    width: 25vw;
+    position: relative;
+    left: 2%;
+}
+label.name,
+label.phone,
+label.created,
+label.by{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1.2vw;
+}
+label.name{
+    justify-content: left;
+}
+label.phone{
+    justify-content: center;
+}
+label.created{
+    justify-content: right;
+}
+label.by{
+
+    position: absolute;
+    bottom: 5%;
+    left: 20%;
+    opacity: 0.5;
+}
+
+
+.actions{
+    margin-top: 0.8vw;
+    /* background-color: rgb(100, 100, 91); */
+    width:20vw;
+    position: relative;
+    right: 2%;
+}
+.crud{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.view,
+.edit,
+.delete{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 18vw;
+}
+.view{
+    justify-content: end;
+}
+.edit{
+    justify-content: center;
+}
+.delete{
+    justify-content: start;
+}
+
+.actions .btn{
+    padding: 4px;
+    width: 6vw;
+    border-radius: 20px;
+}
+
+.edit .btn{
+    border: 2px solid green;
+}
+.edit .btn:hover{
+    border: 2px solid var(--background-color);
+    background:green;
+    color: white ;
+}
+
+.delete .btn{
+    border: 2px solid red;
+}
+.delete .btn:hover{
+    border: 2px solid var(--background-color);
+    background:red;
+    color: white ;
+}
+
+.subscription{
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+}
+.subscription button{
+    padding: 4px;
+    width: 13vw;
+    border-radius: 20px;
+
+}
