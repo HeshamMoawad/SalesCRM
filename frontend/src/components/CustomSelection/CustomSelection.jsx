@@ -2,7 +2,7 @@ import React , {useState} from "react";
 import "./CustomSelection.css";
 
 const CustomSelection = (props) => {
-    const { options , defaultIndex } = props;
+    const { options , defaultIndex , child } = props;
     const [selectedValue, setSelectedValue] = useState(defaultIndex ? options[defaultIndex].name : "");
 
     const handleSelectionChange = (e) => {
@@ -11,6 +11,7 @@ const CustomSelection = (props) => {
     
     return (
         <div className="custom-selection">
+            {child}
             <select value={selectedValue} onChange={(e)=>{handleSelectionChange(e)}}>
                 {options
                     ? options.map((option) => {

@@ -18,7 +18,7 @@ const Customers = () => {
             Subscriptions:false,
         }}>
             <div className="customers">
-                <SearchBar/>
+                <SearchBar addPath="customers/add"/>
                 <div className="customers-card-container">
                     <CustomerCard role={permission.role} key={Math.random()}/>
                     <CustomerCard role={permission.role} key={Math.random()}/>
