@@ -1,0 +1,29 @@
+.search-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 9vh;
+    width: 76vw;
+    /* background-color: rgb(241, 98, 98); */
+}
+
+.search-input,
+.search-btn{
+    margin: 5px;
+    padding: 5px;
+
+}
+.search-input{
+    width: 20vw ;
+    border-radius: 20px;
+    border: 2px solid var(--circle-light);
+    background-color: transparent;
+    text-align: center;
+}
+
+.search-btn{
+    width: 6vw ;
+    border-radius: 20px;
+
+}
