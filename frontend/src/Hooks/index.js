@@ -1,6 +1,6 @@
 import { authContext , useAuth , AuthContextProvider  } from "./auth";
 import { permissionContext , PermissionContextProvider , usePermission , MANAGER , SALES , CS } from "./permissions";
-
+import { loadLogin , saveLogin , savePermission , loadPermission} from "./save";
 export default  AuthContextProvider ;
 
 export {
@@ -12,4 +12,8 @@ export {
     MANAGER , 
     SALES , 
     CS ,
+    loadLogin , 
+    saveLogin ,
+    savePermission , 
+    loadPermission ,
 };

@@ -1,4 +1,5 @@
 import React, { useContext, createContext , useState } from "react";
+import { loadLogin } from "./save";
 // {
 //     "username": "saif",
 //     "first_name": "saif",
@@ -14,7 +15,7 @@ import React, { useContext, createContext , useState } from "react";
 export const authContext = createContext();
 
 export function AuthContextProvider ({ children }) {
-    const [auth , setAuth] = useState(null);
+    const [auth , setAuth] = useState(loadLogin());
     return <authContext.Provider value={{ auth , setAuth }}>
             {children}
            </authContext.Provider>;
