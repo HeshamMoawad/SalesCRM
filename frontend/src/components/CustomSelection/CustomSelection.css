@@ -1,0 +1,13 @@
+.custom-selection select{
+    color:var(--circle-light);
+    background-color: transparent;  
+    border: none ;  
+    border-bottom: 1px solid white;
+    border-radius: 10px;
+    width:200px;
+}
+.custom-selection option{
+    color:var(--circle-light);
+    background-color: var(--background-color);
+}
+
