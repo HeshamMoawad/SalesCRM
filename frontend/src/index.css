@@ -7,9 +7,11 @@
 :root{
   --background-color : black ;
   --circle-light : rgba(68, 143, 254 ,1) ;
+  --circle-light-bg : rgba(68, 143, 254 ,0.2) ;
   --circle-dark : #99ffff00 ;
   --second-background-color: rgba(23,22,23,0.8);
   --border-radius:20px;
+
 }
 
 * {
@@ -39,4 +41,22 @@ body {
   background-color: var(--second-background-color);
   border-radius: var(--border-radius);
   display: flex;
+}
+
+
+button{
+  background-color: var(--circle-light);
+  /* position: absolute; */
+  /* width:12vw;
+  height: 40px;
+  left: 10%;
+  bottom:3%; */
+  border: 2px solid var(--circle-light);
+  background: transparent;
+  /* border-radius: 20px; */
+}
+button:hover{
+  border: 2px solid var(--background-color);
+  background: var(--circle-light);
+  color: var(--background-color) ;
 }
