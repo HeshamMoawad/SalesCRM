@@ -1,0 +1,16 @@
+.customers-card-container{
+    position: absolute;
+    height: 75vh;
+    /* max-height: auto; */
+    width: 76.05vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    border: 1px solid transparent;
+    /* border-radius: 20px; */
+    /* background-color: var(--background-color); */
+    bottom: 5vh;
+    left: -0.09%;
+}
