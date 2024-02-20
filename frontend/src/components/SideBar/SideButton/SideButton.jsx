@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./SideButton.css";
+import { useNavigate } from "react-router-dom";
 
 const SideButton = (props) => {
-    const { name, nlogo, tlogo, toggled, setToggled, toggledObject } = props;
+    const { name, nlogo, tlogo, toggled, setToggled, toggledObject , path} = props;
     const [icon, setIcon] = useState(nlogo);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (toggled) {
@@ -33,6 +35,7 @@ const SideButton = (props) => {
                         }
                     }
                     setToggled(Localtoggled);
+                    navigate(path)
                 }}
             >
                 <img src={icon} alt="" />

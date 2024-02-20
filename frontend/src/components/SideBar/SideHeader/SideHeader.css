@@ -4,8 +4,7 @@
     justify-content: space-between;
     border-top-right-radius: var(--border-radius);
     border-top-left-radius: var(--border-radius);
-    max-width: inherit;
-    max-height: 100px;
+    width: 13vw;
     height: fit-content;
     padding: 25px 15px 25px 20px ;
 }
@@ -26,6 +25,11 @@
 
 .side-header > div .project{
     opacity: 0.5;
+    font-size: medium;
+
+}
+.side-header > div .role{
+    font-size: small;
 }
 .side-header > div .name{
     font-size: medium;
