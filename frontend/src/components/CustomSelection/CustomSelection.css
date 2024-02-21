@@ -1,8 +1,7 @@
 .custom-selection select{
     color:var(--circle-light);
     background-color: transparent;  
-    border: none ;  
-    border-bottom: 1px solid white;
+    border: 1px solid white;
     border-radius: 10px;
     width:200px;
 }

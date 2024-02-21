@@ -1,5 +1,6 @@
 import React, { useContext, createContext , useState } from "react";
 import { loadLogin } from "./save";
+import { isLoginExpired } from "../utils/time";
 // {
 //     "username": "saif",
 //     "first_name": "saif",
@@ -9,13 +10,19 @@ import { loadLogin } from "./save";
 //     },
 //     "is_active": true,
 //     "role": "MANAGER",
-//     "Authorization": ".."
+//     "Authorization": ".." ,
+//     "expire" : ""
 //   }
-
 export const authContext = createContext();
 
 export function AuthContextProvider ({ children }) {
-    const [auth , setAuth] = useState(loadLogin());
+    const [login , setLogin] = useState(loadLogin())
+    if (isLoginExpired(login?.expire)){
+        localStorage.clear()
+        setLogin(loadLogin())
+    }
+    // console.log( , "isLoginExpired")
+    const [auth , setAuth] = useState(login);
     return <authContext.Provider value={{ auth , setAuth }}>
             {children}
            </authContext.Provider>;

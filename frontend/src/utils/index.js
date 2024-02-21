@@ -1,17 +1,17 @@
 import request,{
-    ADD_NEW ,
+    GET ,
+    POST ,
+    PUT ,
     DELETE ,
-    FETCH ,
-    UPDATE , 
     SUCCESS_STATUS_CODES
 } from "./requests";
 
 
 export {
     request ,
-    ADD_NEW ,
+    GET ,
+    POST ,
+    PUT ,
     DELETE ,
-    FETCH ,
-    UPDATE ,
     SUCCESS_STATUS_CODES
 };

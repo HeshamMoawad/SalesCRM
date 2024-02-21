@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const FETCH = "GET"
-const ADD_NEW = "POST"
-const UPDATE = "PUT"
+const GET = "GET"
+const POST = "POST"
+const PUT = "PUT"
 const DELETE = "DELETE"
 
 function range(start, end) {
@@ -17,7 +17,7 @@ const Axios = axios.create({
   withCredentials: true,
 })
 
- const request = async( url , method=FETCH , showAlert=[true,false] , query_params = {} , payload={} )=>{
+ const request = async( url , method=GET , showAlert=[true,false] , query_params = {} , payload={} )=>{
 
     const headers = {
       Authorization : localStorage.getItem("Authorization"),
@@ -28,11 +28,11 @@ const Axios = axios.create({
           fullUrl += '?' + new URLSearchParams(query_params).toString();
         }
         let response;
-        if (method === FETCH) {
+        if (method === GET) {
           response = await Axios.get(fullUrl  , {headers});
-        } else if (method === ADD_NEW) {
+        } else if (method === POST) {
           response = await Axios.post(fullUrl, payload  , {headers});
-        } else if (method === UPDATE) {
+        } else if (method === PUT) {
           response = await Axios.put(fullUrl, payload , {headers});
         } else if (method === DELETE) {
           response = await Axios.delete(fullUrl , {headers});
@@ -62,10 +62,10 @@ const Axios = axios.create({
     }
 
 export {
-    FETCH ,
-    ADD_NEW ,
-    UPDATE ,
-    DELETE , 
-    SUCCESS_STATUS_CODES
+      GET ,
+      POST ,
+      PUT ,
+      DELETE ,
+      SUCCESS_STATUS_CODES
 };
 export default request;
