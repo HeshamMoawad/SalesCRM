@@ -1,37 +1,46 @@
-import React from 'react';
-import MainLayout from '../../Layout/MainLayout';
+import React, { useState } from "react";
+import MainLayout from "../../Layout/MainLayout";
 import "./Customers.css";
-import Pageination from '../../components/Pageination/Pageination';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import CustomerCard from '../../components/CustomerCard/CustomerCard';
-import { usePermission } from '../../Hooks';
+import Pageination from "../../components/Pageination/Pageination";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Card from "../../components/Card/Card";
+import Loading from "../../components/Loading/Loading";
+import { usePermission } from "../../Hooks";
+import { useCustomersFetcher } from "../../Hooks/customers";
 
-
-
-const Customers = () => {   
-    const {permission} = usePermission();
+const Customers = () => {
+    const { permission } = usePermission();
+    const { loading, customers, customersFetch, setSearch } = useCustomersFetcher();
 
     return (
-        <MainLayout initToggle={{
-            Dashboard: false,
-            Customers: true,
-            Subscriptions:false,
-        }}>
+        <MainLayout
+            initToggle={{
+                Dashboard: false,
+                Customers: true,
+                Subscriptions: false,
+            }}
+        >
             <div className="customers">
-                <SearchBar addPath="customers/add"/>
+                <SearchBar
+                    addPath={"customers/add"}
+                    headerName={"Customers"}
+                    setSearch={setSearch}
+                />
                 <div className="customers-card-container">
-                    <CustomerCard role={permission.role} key={Math.random()}/>
-                    <CustomerCard role={permission.role} key={Math.random()}/>
-                    <CustomerCard role={permission.role} key={Math.random()}/>
-                    <CustomerCard role={permission.role} key={Math.random()}/>
-                    <CustomerCard role={permission.role} key={Math.random()}/>
-                    {/* <CustomerCard key={Math.random()}/>
-                    <CustomerCard key={Math.random()}/> */}
+                    {loading ? (
+                        <Loading />
+                    ) : (
+                        customers.map((customer)=>{
+                            return (
+                                <Card role={permission.role} key={customer.uuid} data={customer} />
+                            )
+                        })
+                    )}
                 </div>
-                <Pageination/>
+                <Pageination />
             </div>
         </MainLayout>
     );
-}
+};
 
 export default Customers;

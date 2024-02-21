@@ -7,7 +7,7 @@ const PrivateRoute = () => {
   const {auth} = useAuth();
   const {permission , setPermission} = usePermission();
 
-  console.log(permission , "permission")
+  // console.log(permission , "permission")
   return (
   <>
     { auth && permission.isAuthenticated ? (<Outlet/>) : (<Navigate to="/login" replace />)  }
