@@ -7,16 +7,10 @@ import NormalCustomersLogo from "../../assets/icons/customers-white.jpg";
 import ToggledCustomersLogo from "../../assets/icons/customers-blue.jpg";
 import NormalSubscriptionsLogo from "../../assets/icons/subscription-white.png";
 import ToggledSubscriptionsLogo from "../../assets/icons/subscription-blue.png";
- 
-import { useAuth, usePermission } from "../../Hooks";
 import "./SideBar.css";
-import request , {FETCH}  from "../../utils/requests";
-import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../Hooks/login";
 
 const SideBar = (props) => {
-    const {auth , setAuth} = useAuth();
-    const {permission , setPermission} = usePermission();
-    const navigate = useNavigate();
     const {initToggle} = props;
     const Logos = {
         Dashboard: {
@@ -36,17 +30,7 @@ const SideBar = (props) => {
         }
     };
     const [toggled, setToggled] = useState(initToggle);
-    const logout = async (show = [true, false]) => {
-        const response = await request(
-            "/logout",
-            FETCH,
-            show,
-            {},
-        );
-        localStorage.clear()
-        setAuth(null)
-        navigate("/login")
-    };
+    const {logout , auth , permission} = useLogout();
     const logoutHandler =  (e) => {
         e.preventDefault();
         logout();
