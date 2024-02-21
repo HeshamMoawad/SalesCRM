@@ -35,3 +35,13 @@
 .add-btn img{
     width: 2vw;
 }
+.section-name {
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-name h1{
+    font-size: x-large;
+}
