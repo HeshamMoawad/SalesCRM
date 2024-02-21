@@ -1,15 +1,16 @@
-.customer-card{
+.card{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 60vw;
-    min-height: 19vh;
-    background-color: var(--background-color);
+    min-height: 18vh;
+    background-color: var(--second-background-color);
+    /* background-color: red; */
     border-radius: 20px;
     margin: 5px;
 }
 @media screen and (max-height:780px){
-    .customer-card{
+    .card{
         min-height: 20vh;
     }
     
@@ -42,6 +43,12 @@ label.by{
     position: absolute;
     bottom: 5%;
     left: 20%;
+    opacity: 0.5;
+}
+label.project{
+    position: absolute;
+    bottom: 5%;
+    left: 70%;
     opacity: 0.5;
 }
 
