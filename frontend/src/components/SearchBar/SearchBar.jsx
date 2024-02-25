@@ -13,7 +13,7 @@ const SearchBar = ({ addPath, headerName , setSearch}) => {
                     <input
                         className="search-input"
                         type="text"
-                        placeholder='  phone or name or date "dd/mm/yyyy"'
+                        placeholder='  phone ,name ,create date "dd/mm/yyyy"'
                         ref={inputRef}
                     />
                     <button className="search-btn" onClick={()=>{setSearch(inputRef.current.value)}}>Search</button>

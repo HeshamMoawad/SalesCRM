@@ -26,6 +26,61 @@ export const SUBSCRIPTION = "SUBSCRIPTION";
 //     "phone": "+966598788623",
 //     "created_at": "2024-02-13T07:38:35.115425Z"
 // }
+
+
+// {
+//     "uuid": "10d30fc5-265a-419a-9c59-3c7d04e5d790",
+//     "creator": {
+//         "username": "hesham",
+//         "first_name": "",
+//         "project": null,
+//         "is_active": true,
+//         "role": ""
+//     },
+//     "cs": {
+//         "username": "ahmed",
+//         "first_name": "Ahmed",
+//         "project": {
+//             "name": "dddqwe",
+//             "logo": "/media/projects-logo/2111.w013.n001.577B.p30.577.jpg"
+//         },
+//         "is_active": true,
+//         "role": "CS"
+//     },
+//     "customer": {
+//         "uuid": "0871f5dc-b6b6-4e7e-b58f-ab074a57433c",
+//         "creator": {
+//             "username": "ahmed",
+//             "first_name": "Ahmed",
+//             "project": {
+//                 "name": "dddqwe",
+//                 "logo": "/media/projects-logo/2111.w013.n001.577B.p30.577.jpg"
+//             },
+//             "is_active": true,
+//             "role": "CS"
+//         },
+//         "project": {
+//             "name": "dddqwe",
+//             "logo": "/media/projects-logo/2111.w013.n001.577B.p30.577.jpg"
+//         },
+//         "name": "dhdasdبسشwqeqweqweشبس",
+//         "phone": "+966598788623",
+//         "created_at": "2024-02-13T07:38:35.115425Z"
+//     },
+//     "notes": [
+//         {
+//             "note": "dpoaujsdpoajsd",
+//             "created_at": "2024-02-13T11:04:32.357219Z",
+//             "creator": 4
+//         }
+//     ],
+//     "created_at": "2024-02-13T10:22:07.721674Z",
+//     "updates": [],
+//     "start_date": "2024-02-25T10:22:05Z",
+//     "end_date": "2024-02-25T07:46:41Z",
+//     "price": 1000,
+//     "collected_price": 500
+// }
 const covertData =(data)=>{
     const uuid = data?.uuid ;
     const created_at = new Date(data?.created_at).toLocaleDateString();
@@ -54,8 +109,7 @@ const Card = ({ role, type = CUSTOMER  , data }) => {
                     Phone : {info.phone}
                 </label>
                 <label className="created" htmlFor="created">
-                    {type === CUSTOMER ? "Created" : "Subscriptioned"} at : {info.created_at}
-                    
+                    {type === CUSTOMER ? "Created" : "Create Sub"} at : {info.created_at}
                 </label>
                 <label className="by" htmlFor="by">
                     By: {info.by}
