@@ -17,7 +17,7 @@ const Axios = axios.create({
   withCredentials: true,
 })
 
- const request = async( url , method=GET , showAlert=[true,false] , query_params = {} , payload={} )=>{
+ const request = async( url , method=GET , showAlert=[true,false] , query_params = {} , payload={}  , CancelToken=undefined)=>{
 
     const headers = {
       Authorization : localStorage.getItem("Authorization"),
@@ -29,13 +29,13 @@ const Axios = axios.create({
         }
         let response;
         if (method === GET) {
-          response = await Axios.get(fullUrl  , {headers});
+          response = await Axios.get(fullUrl  , {headers:headers , cancelToken:CancelToken} );
         } else if (method === POST) {
-          response = await Axios.post(fullUrl, payload  , {headers});
+          response = await Axios.post(fullUrl, payload  ,  {headers:headers , cancelToken:CancelToken});
         } else if (method === PUT) {
-          response = await Axios.put(fullUrl, payload , {headers});
+          response = await Axios.put(fullUrl, payload ,  {headers:headers , cancelToken:CancelToken});
         } else if (method === DELETE) {
-          response = await Axios.delete(fullUrl , {headers});
+          response = await Axios.delete(fullUrl ,  {headers:headers , cancelToken:CancelToken});
         } 
         if (showAlert[0]){
           await Swal.fire({
@@ -48,16 +48,15 @@ const Axios = axios.create({
         
       } catch (error) {
         // Handle errors here
-        if (showAlert[1]){
+        if (showAlert[1]&& !axios.isCancel(error)){
           await Swal.fire({
             title:"message" ,
-            text: String(error.response.data.message) ,
-            icon:'error',
+            text:  String(error) ,
+            icon: 'error',
         })
         }
-        console.error('Error making request:', error);
         // throw error;
-        return error.response
+        return error
       }
     }
 
