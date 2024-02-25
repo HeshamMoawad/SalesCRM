@@ -3,7 +3,7 @@ import request , { SUCCESS_STATUS_CODES } from "../utils/requests";
 
 
 const reverseDate = (text)=>{
-    var arr = text.split("/")
+    const arr = text.split("/")
     return `${arr[2]}-${arr[1]}-${arr[0]}`
 }
 const convertTextToParams = (text)=>{
@@ -31,31 +31,70 @@ export const useCustomersFetcher = () => {
     const [loading , setLoading] = useState(true);
     const [customers , setCustomers] = useState([]);
     const [search, setSearch] = useState("");
-    const customersFetch = async (show = [false, true])=>{
-        console.log("running")
+
+    const customersFetch = async (show = [false, true] )=>{
         const response = await request(
             "/customers",
             "GET",
             show,
             convertTextToParams(search) ,
-            {}
+            {},
         );
-        
         if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
             // success 
             setCustomers(response.data)
-            setLoading(false)
+        }else {
+            setCustomers([])
         }
-    }
+    };
     useEffect(()=>{
         setLoading(true)
         customersFetch();
-    } ,[search])
+        setLoading(false)
+        return ()=>{
+            console.log("unmouted" ,  new Date().getTime())
+        }
+    } ,[search]);
     return {
         customersFetch , 
         loading ,
         customers ,
         setSearch
-    }
+    };
+}
+
+
+export const useCustomerFetcher = (uuid) => {
+    const [loading , setLoading] = useState(true);
+    const [customer , setCustomer] = useState(null);
+    const customerFetch = async (show = [false, true] )=>{
+        const response = await request(
+            "/customers",
+            "GET",
+            show,
+            {uuid} ,
+            {},
+        );
+        console.log(`\n${response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)}\n`)
+        if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
+            // success 
+            setCustomer(response.data[0])
+            
+        }else {
+            setCustomer(null)
+        }
+    };
+    useEffect(()=>{
+        setLoading(true)
+        customerFetch();
+        console.log(customer)
+        setLoading(false)
+        
+    } ,[]);
+    return {
+        customerFetch , 
+        loading ,
+        customer ,
+    };
 }
 
