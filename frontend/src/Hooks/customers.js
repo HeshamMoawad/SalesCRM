@@ -87,7 +87,6 @@ export const useCustomerFetcher = (uuid) => {
     useEffect(()=>{
         setLoading(true)
         customerFetch();
-        console.log(customer)
         setLoading(false)
         
     } ,[]);
