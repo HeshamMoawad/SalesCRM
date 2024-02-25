@@ -6,8 +6,11 @@ export const useProjectsFetcher = ()=>{
     const {permission} = usePermission()
     const [projects , setProjects] = useState([]);
     const fetchProjects = async()=>{
-        const {data} =  await request("/projects" , GET , [false,false])
-        setProjects(data)
+        const response =  await request("/projects" , GET , [false,false])
+        console.log(response?.data)
+        if (response?.data){
+            setProjects(response.data)
+        }
     }
     useEffect(()=>{
         if (permission.role === MANAGER){
