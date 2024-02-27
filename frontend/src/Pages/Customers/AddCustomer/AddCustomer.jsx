@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AddCustomer.css";
 import MainLayout from "../../../Layout/MainLayout";
 import { MANAGER, usePermission } from "../../../Hooks";
 import CustomSelection from "../../../components/CustomSelection/CustomSelection";
+import { addNewCustomer } from "../../../Hooks/customers";
+import { useNavigate } from "react-router-dom";
 
 const AddCustomer = () => {
+    const [form , setForm] = useState({name:'',phone:''});
     const { permission } = usePermission();
+    const navigate = useNavigate();
+    const writeHandler = (e)=>{
+        setForm({
+            ...form ,
+            [e.target.name] : e.target.value
+        })
+    }
     return (
         <MainLayout
             initToggle={{
@@ -18,13 +28,19 @@ const AddCustomer = () => {
                 <div className="add-form">
                     <div className="name">
                         <label htmlFor="name">Name : </label>
-                        <input type="text" placeholder="name" />
+                        <input type="text" 
+                            name="name"
+                            placeholder="name"  
+                            onChange={writeHandler}
+                            />
                     </div>
                     <div className="phone">
                         <label htmlFor="phone">Phone : </label>
                         <input
                             type="text"
                             placeholder="+9665XXXXXXXX or 05XXXXXXXX"
+                            name="phone"
+                            onChange={writeHandler}
                         />
                     </div>
                     {permission.role === MANAGER ? (
@@ -36,8 +52,18 @@ const AddCustomer = () => {
                     )}
                     <div className="btns">
                         <button className="cancel">cancel</button>
-                        <button className="save">save</button>
-                        <button className="save-add">
+                        <button className="save" onClick={async()=>{
+                            const uuid = await addNewCustomer(form)
+                            if (uuid !== null) {
+                                navigate(`/customers`)
+                            }
+                        }}>save</button>
+                        <button className="save-add" onClick={async()=>{
+                            const uuid = await addNewCustomer(form)
+                            if (uuid !== null) {
+                                navigate(`/subscriptions/add/${uuid}`)
+                            }
+                        }}>
                             save & Add Subscription
                         </button>
                     </div>
