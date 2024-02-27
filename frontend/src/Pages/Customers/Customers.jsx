@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import MainLayout from "../../Layout/MainLayout";
 import "./Customers.css";
 import Pageination from "../../components/Pageination/Pageination";

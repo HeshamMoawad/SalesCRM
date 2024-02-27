@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./EditCustomer.css";
 import MainLayout from "../../../Layout/MainLayout";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useCustomerFetcher , saveEditedCustomer } from "../../../Hooks/customer
 import Loading from "../../../components/Loading/Loading";
 import DataNotFound from "../../../components/DataNotFound/DataNotFound";
 import { getDate } from "../../../utils/time";
+import Updates from "../../../components/Updates/Updates";
 
 
 
@@ -75,24 +76,7 @@ const EditCustomer = (props) => {
                                     <input type="text" value={customer.subscriptions} disabled />
                                 </div>
                             </div>
-                            <div className="updates">
-                                <label className="header">Updates</label>
-                                {
-                                    customer?.updates ?
-                                    customer.updates.map((update)=>{
-                                        return (
-                                            <div className="update">
-                                                <label htmlFor="name">Updated by: {update.user?.username} </label>
-                                                <label htmlFor="by">
-                                                    Updated at : {getDate(update.created_at)}
-                                                </label>
-                                            </div>
-
-                                        )
-                                    }):
-                                    null
-                                }
-                            </div>
+                            <Updates customer={customer}/>
                             {props.view ? 
                             (
                                 <div className="btns">
@@ -101,7 +85,6 @@ const EditCustomer = (props) => {
                                     </Link>
                                 
                                 </div>
-
                             ) :
                             (
                                 <div className="btns">
