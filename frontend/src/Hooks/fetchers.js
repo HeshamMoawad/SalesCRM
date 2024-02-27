@@ -22,3 +22,50 @@ export const useProjectsFetcher = ()=>{
         projects
     }
 }
+
+export const useNoteFetcher = (subscriptionId)=>{
+    const [notes , setNotes] = useState([]);
+    const [loading , setLoading] = useState(false);
+    const fetchNotes = async()=>{
+        const response =  await request("/notes" , GET , [false,false])
+        // console.log(response?.data)
+        if (response?.data){
+            setNotes(response.data)
+        }
+    }
+    useEffect(()=>{
+        setLoading(true)
+        fetchNotes();
+        setLoading(false)
+    } , [])
+    return {
+        notes , 
+        fetchNotes ,
+        loading
+    }
+}
+
+export const useCSFetcher = ()=>{
+    const {permission} = usePermission()
+    const [cs , setCS] = useState([]);
+    const fetchCS = async(params={})=>{
+        const response =  await request("/cs" , GET , [false,false] , params)
+        if (response?.data){
+            setCS(response.data)
+        }
+    }
+    useEffect(()=>{
+        if (permission.role === MANAGER){
+            fetchCS({});
+        }else {
+            fetchCS({});
+        }
+
+
+        
+    } , [])
+    return {
+        cs ,
+        fetchCS
+    }
+}
