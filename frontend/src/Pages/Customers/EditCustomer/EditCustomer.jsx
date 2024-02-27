@@ -1,45 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./EditCustomer.css";
 import MainLayout from "../../../Layout/MainLayout";
-import { Link, useParams } from "react-router-dom";
-import { useCustomerFetcher } from "../../../Hooks/customers";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useCustomerFetcher , saveEditedCustomer } from "../../../Hooks/customers";
 import Loading from "../../../components/Loading/Loading";
+import DataNotFound from "../../../components/DataNotFound/DataNotFound";
+import { getDate } from "../../../utils/time";
 
-// {
-//     "uuid": "0871f5dc-b6b6-4e7e-b58f-ab074a57433c",
-//     "creator": {
-//         "username": "ahmed",
-//         "first_name": "Ahmed",
-//         "project": {
-//             "name": "dddqwe",
-//             "logo": "/media/projects-logo/2111.w013.n001.577B.p30.577.jpg"
-//         },
-//         "is_active": true,
-//         "role": "CS"
-//     },
-//     "project": {
-//         "name": "dddqwe",
-//         "logo": "/media/projects-logo/2111.w013.n001.577B.p30.577.jpg"
-//     },
-//     "name": "dhdasdبسشwqeqweqweشبس",
-//     "phone": "+966598788623",
-//     "created_at": "2024-02-13T07:38:35.115425Z"
-// }
-const getDate = (_date)=>{
-    const date = new Date(_date)
-    const arr = date.toLocaleDateString().split("/")
-    return `${arr[1]}/${arr[0]}/${arr[2]}  ${date.toLocaleTimeString()}`
-}
+
+
 const EditCustomer = (props) => {
     const { customerId } = useParams();
-    const {customer , loading } = useCustomerFetcher(customerId)
-    const [data,setData] = useState(customer);
+    const navigate = useNavigate();
+    const {customer , loading , setCustomer } = useCustomerFetcher(customerId);
     const isDisabled = props.view ? true : false;
     const editHandler = (e)=>{
-        setData({
-            ...data ,
+        setCustomer({
+            ...customer ,
             [e.target.name] : e.target.value
-        })
+        });
     }
     return (
         <MainLayout
@@ -51,7 +30,7 @@ const EditCustomer = (props) => {
         >
             <div className="edit-customer-container">
                 {
-                    !loading && customer ? 
+                     customer ? 
                     (
                         <div className="edit-form">
                             <div className="edited">
@@ -129,17 +108,20 @@ const EditCustomer = (props) => {
                                     <Link to={'/customers'}>
                                     <button className="cancel">cancel</button>
                                     </Link>
-                                    <button className="save">save</button>
-                                    <button className="save-add">
+                                    <button className="save" onClick={()=>{saveEditedCustomer({uuid : customer.uuid,name : customer.name , phone : customer.phone})}}>save</button>
+                                    <button className="save-add" onClick={async (e)=>{
+                                        await saveEditedCustomer({uuid : customer.uuid,name : customer.name , phone : customer.phone});
+                                        // navigate to add subscription
+                                        navigate(`/subscriptions/add/${customer.uuid}`)
+                                        }}>
                                         save & Add Subscription
                                     </button>
                                 </div>
                             )  }
                         </div>
                     ):
-                    (
-                        <Loading/>
-                    )
+                    loading ?(<Loading/>):
+                    (<DataNotFound/>) 
                 }
             </div>
         </MainLayout>
