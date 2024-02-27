@@ -2,6 +2,10 @@ import React from "react";
 import "./Card.css";
 import { MANAGER } from "../../Hooks";
 import { Link } from "react-router-dom";
+import { getDate } from "../../utils/time";
+import Swal from "sweetalert2";
+import { deleteCustomer } from "../../Hooks/customers";
+import { deleteSubscription } from "../../Hooks/subscriptions";
 
 export const CUSTOMER = "CUSTOMER";
 export const SUBSCRIPTION = "SUBSCRIPTION";
@@ -83,11 +87,12 @@ export const SUBSCRIPTION = "SUBSCRIPTION";
 // }
 const covertData =(data)=>{
     const uuid = data?.uuid ;
-    const created_at = new Date(data?.created_at).toLocaleDateString();
+    const created_at = getDate(data?.created_at);
     const by = data?.creator.username;
     const name = data?.name ? data.name : data?.customer?.name;
     const phone = data?.phone ? data.phone : data?.customer?.phone;
     const project = data?.project?.name ? data?.project?.name : data?.customer?.project?.name
+
     return {
         uuid ,
         created_at ,
@@ -138,12 +143,30 @@ const Card = ({ role, type = CUSTOMER  , data }) => {
                             visibility: role === MANAGER ? "" : "hidden",
                         }}
                     >
-                        <button className="btn">Delete</button>
+                        <button className="btn" onClick={async()=>{
+                            const result = await Swal.fire({
+                                title: `Are you sure to delete ${type === CUSTOMER ? "Customer" : "Subscription"} with \n${info.uuid}\n${info.phone}?`,
+                                showCancelButton: true,
+                                confirmButtonText: "Delete",
+                                denyButtonText: `Cancel`
+                              })
+                            
+                            if (result.isConfirmed) {
+                                if (type === CUSTOMER){
+                                    await deleteCustomer(info.uuid);
+                                }else {
+                                    await deleteSubscription(info.uuid);
+                                }
+                                
+                            }    
+                            }}>Delete</button>
                     </div>
                 </div>
                 {type !== CUSTOMER ? null : (
                     <div className="subscription">
+                        <Link to={`/subscriptions/add/${info.uuid}`}>
                         <button>Add Subscription</button>
+                        </Link>
                     </div>
                 )}
             </div>
