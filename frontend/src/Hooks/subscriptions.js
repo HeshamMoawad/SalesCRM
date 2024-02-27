@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import request , { SUCCESS_STATUS_CODES } from "../utils/requests";
-import axios from "axios";
+// import axios from "axios";
+import Swal from "sweetalert2";
 
 const reverseDate = (text)=>{
     const arr = text.split("/")
@@ -63,3 +64,57 @@ export const useSubscriptionsFetcher = () => {
     };
 }
 
+
+export const addSubscription = async (data,show = [false, false] )=>{
+    const response = await request(
+        "/subscriptions",
+        "POST",
+        show,
+        {},
+        {...data},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "added Successfully" ,
+            icon:'info',
+        })
+        window.location.pathname = '/subscriptions';
+        console.log("true" , response)
+        // navigate("/customers")
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response.data.message ,
+            icon:'warning',
+        })
+
+        // window.location.reload();
+    }
+};
+
+export const deleteSubscription = async (uuid , show = [false, false])=>{
+    const response = await request(
+        "/subscriptions",
+        "DELETE",
+        show,
+        {uuid:uuid} ,
+        {},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "deleted Successfully" ,
+            icon:'info',
+        })
+        window.location.reload();
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response?.data?.message ,
+            icon:'warning',
+        })
+        return null
+    }
+
+}

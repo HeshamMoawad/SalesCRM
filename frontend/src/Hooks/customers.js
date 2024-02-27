@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import request , { SUCCESS_STATUS_CODES } from "../utils/requests";
-
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const reverseDate = (text)=>{
     const arr = text.split("/")
@@ -94,6 +95,92 @@ export const useCustomerFetcher = (uuid) => {
         customerFetch , 
         loading ,
         customer ,
+        setCustomer
     };
+} 
+
+export const saveEditedCustomer = async (data , show = [false, true])=>{
+    const response = await request(
+        "/customers",
+        "PUT",
+        show,
+        {} ,
+        {...data},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "updated Successfully" ,
+            icon:'info',
+        })
+        window.location.reload();
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response.data.message ,
+            icon:'warning',
+        })
+        window.location.reload();
+    }
+
+}
+export const addNewCustomer = async (data , show = [false, true])=>{
+    // const navigate = useNavigate();
+    const response = await request(
+        "/customers",
+        "POST",
+        show,
+        {} ,
+        {...data},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "added Successfully" ,
+            icon:'info',
+        })
+        // window.location.pathname = '/customers';
+        return response.data.uuid
+        // navigate("/customers")
+
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response.data.message ,
+            icon:'warning',
+        })
+        // window.location.reload();
+        return null
+    }
+
 }
 
+export const deleteCustomer = async (uuid , show = [false, false])=>{
+    const response = await request(
+        "/customers",
+        "DELETE",
+        show,
+        {uuid:uuid} ,
+        {},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "deleted Successfully" ,
+            icon:'info',
+        })
+        window.location.reload();
+        // return response.data.uuid
+        // navigate("/customers")
+
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response?.data?.message ,
+            icon:'warning',
+        })
+        // window.location.reload();
+        return null
+    }
+
+}
