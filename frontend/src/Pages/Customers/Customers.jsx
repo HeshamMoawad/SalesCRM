@@ -10,7 +10,6 @@ import { useCustomersFetcher } from "../../Hooks/customers";
 import DataNotFound from "../../components/DataNotFound/DataNotFound";
 
 const Customers = () => {
-    // console.log("Customers render")
     const { permission } = usePermission();
     const { loading, customers, setSearch } = useCustomersFetcher();
 

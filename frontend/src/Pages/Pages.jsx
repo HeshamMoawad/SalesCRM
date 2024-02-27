@@ -7,6 +7,7 @@ import Customers from "./Customers/Customers";
 import Subscriptions from "./Subscriptions/Subscriptions";
 import AddCustomer from './Customers/AddCustomer/AddCustomer';
 import EditCustomer from './Customers/EditCustomer/EditCustomer';
+import AddSubscription from './Subscriptions/AddSubscription/AddSubscription';
 
 // import NotFound from './NotFound/NotFound';
 
@@ -20,10 +21,10 @@ const Pages = () => {
                     <Route path='customers' element ={<Customers/>}/>
                     <Route path='customers/add' element={<AddCustomer/>}/>
                     <Route path='customers/view/:customerId' element={<EditCustomer view={true}/>}/>
-                    <Route path='customers/edit/:customerId' element={<EditCustomer />}/>
+                    <Route path='customers/edit/:customerId' element={<EditCustomer view={false}/>}/>
 
                     <Route path='subscriptions/' element = {<Subscriptions/>}/>
-                    {/* <Route path='subscriptions/add/:customerId' element={}/> */}
+                    <Route path='subscriptions/add/:customerId' element={<AddSubscription/>}/>
                     {/* <Route path='subscriptions/view/:subscriptionId' element={}/> */}
                     {/* <Route path='subscriptions/edit/:subscriptionId' element={}/> */}
 
