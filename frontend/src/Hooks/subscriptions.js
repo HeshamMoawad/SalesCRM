@@ -28,39 +28,78 @@ const convertTextToParams = (text)=>{
 }
 
 
-export const useSubscriptionsFetcher = () => {
+export const useSubscriptionsFetcher = (page , setHasMore) => {
     const [loading , setLoading] = useState(true);
     const [subscriptions , setSubscriptions] = useState([]);
     const [search, setSearch] = useState("");
 
-    const subscriptionsFetch = async (show = [false, true] )=>{
+    const subscriptionsFetch = async (pageNumber , show = [false, true] )=>{
         const response = await request(
             "/subscriptions",
             "GET",
             show,
-            convertTextToParams(search) ,
+            {page:pageNumber , ...convertTextToParams(search)} ,
             {},
         );
         if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
             // success 
-            setSubscriptions(response.data)
+            setSubscriptions(response.data.results)
+            setHasMore({
+                next :response.data.next ,
+                prev : response.data.previous ,
+                count : response.data.results.length ,
+            })
+
         }else {
             setSubscriptions([])
         }
     };
     useEffect(()=>{
         setLoading(true)
-        subscriptionsFetch();
+        subscriptionsFetch(page);
         setLoading(false)
         return ()=>{
             console.log("unmouted" ,  new Date().getTime())
         }
-    } ,[search]);
+    } ,[search , page]);
     return {
         subscriptionsFetch , 
         loading ,
         subscriptions ,
         setSearch
+    };
+}
+export const useSubscriptionFetcher = (uuid) => {
+    const [loading , setLoading] = useState(true);
+    const [subscription , setSubscription] = useState(null);
+
+    const subscriptionFetch = async (show = [false, true] )=>{
+        const response = await request(
+            "/subscriptions",
+            "GET",
+            show,
+            {uuid},
+            {},
+        );
+        if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
+            // success 
+            setSubscription(response.data.results[0])
+            // setSubscription({})
+        }
+    };
+    useEffect(()=>{
+        setLoading(true)
+        subscriptionFetch();
+        setLoading(false)
+        return ()=>{
+            console.log("unmouted" ,  new Date().getTime())
+        }
+    } ,[]);
+    return {
+        subscriptionFetch , 
+        loading ,
+        subscription ,
+        setSubscription
     };
 }
 
@@ -77,7 +116,9 @@ export const addSubscription = async (data,show = [false, false] )=>{
         await Swal.fire({
             title:"Success" ,
             text: "added Successfully" ,
-            icon:'info',
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
         })
         window.location.pathname = '/subscriptions';
         console.log("true" , response)
@@ -86,7 +127,7 @@ export const addSubscription = async (data,show = [false, false] )=>{
         await Swal.fire({
             title:"Faild" ,
             text: response.data.message ,
-            icon:'warning',
+            icon:'error',
         })
 
         // window.location.reload();
@@ -105,16 +146,44 @@ export const deleteSubscription = async (uuid , show = [false, false])=>{
         await Swal.fire({
             title:"Success" ,
             text: "deleted Successfully" ,
-            icon:'info',
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
         })
         window.location.reload();
     }else {
         await Swal.fire({
             title:"Faild" ,
             text: response?.data?.message ,
-            icon:'warning',
+            icon:'error',
         })
         return null
     }
+}
 
+export const saveEditedSubscription = async (data , show = [false, false])=>{
+    const response = await request(
+        "/subscriptions",
+        "PUT",
+        show,
+        {} ,
+        {...data},
+    );
+    if (response?.data?.uuid){
+        await Swal.fire({
+            title:"Success" ,
+            text: "updated Successfully" ,
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
+        })
+        window.location.reload();
+    }else {
+        await Swal.fire({
+            title:"Faild" ,
+            text: response?.data?.message ,
+            icon:'error',
+        })
+        // window.location.reload();
+    }
 }

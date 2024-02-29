@@ -28,34 +28,39 @@ const convertTextToParams = (text)=>{
 }
 
 
-export const useCustomersFetcher = () => {
+export const useCustomersFetcher = (page , setHasMore) => {
     const [loading , setLoading] = useState(true);
     const [customers , setCustomers] = useState([]);
     const [search, setSearch] = useState("");
 
-    const customersFetch = async (show = [false, true] )=>{
+    const customersFetch = async ( pageNumber , show = [false, true] )=>{
         const response = await request(
             "/customers",
             "GET",
             show,
-            convertTextToParams(search) ,
+            {page:pageNumber , ...convertTextToParams(search)} ,
             {},
         );
         if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
             // success 
-            setCustomers(response.data)
+            setCustomers(response.data.results)
+            setHasMore({
+                next :response.data.next ,
+                prev : response.data.previous,
+                count : response.data.results.length ,
+            })
         }else {
             setCustomers([])
         }
     };
     useEffect(()=>{
         setLoading(true)
-        customersFetch();
+        customersFetch(page);
         setLoading(false)
         return ()=>{
             console.log("unmouted" ,  new Date().getTime())
         }
-    } ,[search]);
+    } ,[search , page]);
     return {
         customersFetch , 
         loading ,
@@ -79,7 +84,7 @@ export const useCustomerFetcher = (uuid) => {
         console.log(`\n${response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)}\n`)
         if (response !== undefined && SUCCESS_STATUS_CODES.includes(response.status)) {
             // success 
-            setCustomer(response.data[0])
+            setCustomer(response.data.results[0])
             
         }else {
             setCustomer(null)
@@ -111,14 +116,17 @@ export const saveEditedCustomer = async (data , show = [false, true])=>{
         await Swal.fire({
             title:"Success" ,
             text: "updated Successfully" ,
-            icon:'info',
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
+
         })
         window.location.reload();
     }else {
         await Swal.fire({
             title:"Faild" ,
             text: response.data.message ,
-            icon:'warning',
+            icon:'error',
         })
         window.location.reload();
     }
@@ -137,7 +145,10 @@ export const addNewCustomer = async (data , show = [false, true])=>{
         await Swal.fire({
             title:"Success" ,
             text: "added Successfully" ,
-            icon:'info',
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
+
         })
         // window.location.pathname = '/customers';
         return response.data.uuid
@@ -147,7 +158,7 @@ export const addNewCustomer = async (data , show = [false, true])=>{
         await Swal.fire({
             title:"Faild" ,
             text: response.data.message ,
-            icon:'warning',
+            icon:'error',
         })
         // window.location.reload();
         return null
@@ -167,7 +178,9 @@ export const deleteCustomer = async (uuid , show = [false, false])=>{
         await Swal.fire({
             title:"Success" ,
             text: "deleted Successfully" ,
-            icon:'info',
+            icon:'success',
+            showConfirmButton: false,
+            timer: 1000
         })
         window.location.reload();
         // return response.data.uuid
@@ -177,7 +190,7 @@ export const deleteCustomer = async (uuid , show = [false, false])=>{
         await Swal.fire({
             title:"Faild" ,
             text: response?.data?.message ,
-            icon:'warning',
+            icon:'error',
         })
         // window.location.reload();
         return null
