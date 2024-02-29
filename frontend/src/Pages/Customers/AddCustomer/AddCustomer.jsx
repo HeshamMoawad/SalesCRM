@@ -4,11 +4,13 @@ import MainLayout from "../../../Layout/MainLayout";
 import { MANAGER, usePermission } from "../../../Hooks";
 import CustomSelection from "../../../components/CustomSelection/CustomSelection";
 import { addNewCustomer } from "../../../Hooks/customers";
+import { useProjectsFetcher } from "../../../Hooks/fetchers";
 import { useNavigate } from "react-router-dom";
 
 const AddCustomer = () => {
     const [form , setForm] = useState({name:'',phone:''});
     const { permission } = usePermission();
+    const {projects} = useProjectsFetcher();
     const navigate = useNavigate();
     const writeHandler = (e)=>{
         setForm({
@@ -45,7 +47,17 @@ const AddCustomer = () => {
                     </div>
                     {permission.role === MANAGER ? (
                         <div className="project">
-                            <CustomSelection child={(<label htmlFor="phone">Project : </label>)}/>
+                            <CustomSelection 
+                                options={projects} 
+                                defaultIndex={0} 
+                                setSelection = {(value)=>{
+                                    setForm({
+                                        ...form ,
+                                        project:value
+                                    })
+                                }}
+                                child={(<label htmlFor="phone">Project : </label>)}
+                            />
                         </div>
                     ) : (
                         null
