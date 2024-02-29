@@ -60,3 +60,22 @@ button:hover{
   background: var(--circle-light);
   color: var(--background-color) ;
 }
+button:disabled{
+  border: 2px solid gray;
+}
+button:disabled:hover{
+  color: white;
+  border: 2px solid gray;
+  background: transparent;
+}
+
+input:disabled{
+  border: 2px solid gray;
+}
+input:disabled:hover{
+  color: white;
+  border: 2px solid gray;
+  background: transparent;
+}
+
+
