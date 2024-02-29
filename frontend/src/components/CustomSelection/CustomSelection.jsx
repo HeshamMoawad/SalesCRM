@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./CustomSelection.css";
 
-const CustomSelection = (props) => {
-    const { options, defaultIndex, child, setSelection } = props;
+const CustomSelection = ({ options, defaultIndex, child, setSelection, initvalue , isDisabled=false  }) => {
+    // const { options, defaultIndex, child, setSelection, initvalue , isDisabled  } = props;
     const [selectedValue, setSelectedValue] = useState(
-        defaultIndex
+        initvalue
+            ? initvalue
+            : defaultIndex
             ? options[defaultIndex]?.name
                 ? options[defaultIndex].name
                 : options[defaultIndex].username
@@ -14,7 +16,7 @@ const CustomSelection = (props) => {
         setSelectedValue(e.target.value);
     };
     useEffect(() => {
-        if (setSelection){
+        if (setSelection) {
             setSelection(selectedValue);
             console.log(selectedValue);
         }
@@ -27,9 +29,9 @@ const CustomSelection = (props) => {
                 onChange={(e) => {
                     handleSelectionChange(e);
                 }}
+                disabled={isDisabled}
             >
-                <option key={Math.random()} value={''}>
-                </option>
+                <option key={Math.random()} value={""}></option>
                 {options
                     ? options.map((option) => {
                           if (option?.name) {

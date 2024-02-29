@@ -4,6 +4,7 @@
     border: 1px solid white;
     border-radius: 10px;
     width:200px;
+    text-align: center;
 }
 .custom-selection option{
     color:var(--circle-light);
