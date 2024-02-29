@@ -9,13 +9,14 @@ import CalendarGroup from "../../../components/CalendarGroup/CalendarGroup";
 import CustomSelection from "../../../components/CustomSelection/CustomSelection";
 import { useCSFetcher } from "../../../Hooks/fetchers";
 import { addSubscription } from "../../../Hooks/subscriptions";
+import { getDate } from "../../../utils/time";
 
 
 const AddSubscription = () => {
     const { customerId } = useParams();
     const [date , setDate] = useState({
-        start_date:new Date().toISOString(),
-        end_date:new Date().toISOString(),
+        start_date:new Date().toLocaleDateString(),
+        end_date:new Date().toLocaleDateString(),
     });
     const [prices , setPrices] = useState({
         price:0,
@@ -108,16 +109,16 @@ const AddSubscription = () => {
                         </div>
                         {/* <Calendar/> */}
                         <CalendarGroup
+                        start_date={date.start_date}
+                        end_date={date.end_date}
                         setDateFrom={(value)=>{
-                            setDate({
-                                ...date ,
-                                start_date : value
+                            setDate(prev =>{
+                                return{...prev ,start_date : value}
                             })
                         }}
                         setDateTo={(value)=>{
-                            setDate({
-                                ...date ,
-                                end_date : value
+                            setDate(prev => {
+                                return{...prev ,end_date : value}
                             })
                         }}
                         />
@@ -126,8 +127,8 @@ const AddSubscription = () => {
                             <button className="cancel">cancel</button>
                             </Link>
                             <button className="save" onClick={async ()=>{
-                                await addSubscription({...form , ...date , ...prices})
-                                console.log({...form , ...date , ...prices})
+                                await addSubscription({...form , ...prices , ...date,   customer_uuid:customer.uuid})
+                                console.log({...form , ...date , ...prices  , customer_uuid:customer.uuid})
                             }}>save</button>
                         </div>
                         </>

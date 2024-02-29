@@ -17,7 +17,7 @@ const Login = () => {
     }
     const loginHandler = async (e) => {
         e.preventDefault();
-        login([false, false] , {...loginForm});
+        login([false, true] , {...loginForm});
     };
     return (
         <div className="card-container">

@@ -11,7 +11,6 @@ import {
     saveEditedSubscription,
     useSubscriptionFetcher,
 } from "../../../Hooks/subscriptions";
-import { getDate } from "../../../utils/time";
 import Updates from "../../../components/Updates/Updates";
 import Notes from "../../../components/Notes/Notes";
 

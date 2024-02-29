@@ -8,13 +8,14 @@
     text-align: center;
     align-items: center;
     flex-direction: column;
+    /* min-height: 120vh; */
 }
 
 .add-subscription-header{
     margin-top: 1%;
     /* background-color:blue; */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; 
     /* text-align: center; */
     align-items: center;
     flex-direction: row;
@@ -32,11 +33,15 @@
 .add-subscription-body{
     /* background-color: red; */
     width: 85%;
-    height: 88%;
+    height: 100%;
+    min-height: max-content;
     font-size: xx-large;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: start; /*--------------------------------*/ 
+    /* overflow-y: auto; */
+    overflow-x: hidden;
+
 }
 .add-subscription-body .text{
     display: flex;
@@ -55,15 +60,19 @@
     background-color: transparent;
     border: none;
     border: 1px solid var(--circle-light);
-    border-radius: 20px;
-    padding: 8px;
+    border-radius: 10px;
+    padding: 9px;
     width: 50vw;
+    height: 15vh;
     margin-top: 1%;
+    text-align: right;
+}
+.add-subscription-body textarea::placeholder{
     text-align: center;
 }
-.add-subscription-body textarea:focus{
-    text-align: right;
-    content: '';
+.add-subscription-body textarea:disabled{
+    border: 1px solid gray;
+    outline: none;
 }
 
 .add-subscription-body .btns{
