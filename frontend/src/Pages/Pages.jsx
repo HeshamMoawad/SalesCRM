@@ -8,6 +8,7 @@ import Subscriptions from "./Subscriptions/Subscriptions";
 import AddCustomer from './Customers/AddCustomer/AddCustomer';
 import EditCustomer from './Customers/EditCustomer/EditCustomer';
 import AddSubscription from './Subscriptions/AddSubscription/AddSubscription';
+import EditSubscription from './Subscriptions/EditSubscription/EditSubscription';
 
 // import NotFound from './NotFound/NotFound';
 
@@ -25,8 +26,8 @@ const Pages = () => {
 
                     <Route path='subscriptions/' element = {<Subscriptions/>}/>
                     <Route path='subscriptions/add/:customerId' element={<AddSubscription/>}/>
-                    {/* <Route path='subscriptions/view/:subscriptionId' element={}/> */}
-                    {/* <Route path='subscriptions/edit/:subscriptionId' element={}/> */}
+                    <Route path='subscriptions/view/:subscriptionId' element={<EditSubscription isDisabled={true}/>}/>
+                    <Route path='subscriptions/edit/:subscriptionId' element={<EditSubscription/>}/>
 
                     {/* <Route element = {<NotFound/>}/> */}
                     {/* <Route index element={<Default/>}/> */}
