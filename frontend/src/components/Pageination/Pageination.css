@@ -19,9 +19,9 @@
 }
 .next, 
 .prev,
-.current{
+.current , 
+.count{
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
-    
 }
