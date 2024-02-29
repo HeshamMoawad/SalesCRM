@@ -1,10 +1,16 @@
 .updates {
     margin-top: 2%;
+    width: 100%;
     max-height: fit-content;
+    min-height: 20vh;
     overflow-y: auto;
     overflow-x: hidden;
     /* border: 1px solid var(--circle-light); */
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }
 .updates .header{
     display: flex;
@@ -17,8 +23,10 @@
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
-    width: 50vw;
+    /* width: 50vw; */
+    width: 90%;
     border: 2px solid orange;
     border-radius: 20px;
     margin-top: 1%;
+    min-height: 5vh;
 }

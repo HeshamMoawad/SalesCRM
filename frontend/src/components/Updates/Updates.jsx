@@ -6,7 +6,7 @@ const Updates = ({customer}) => {
     return (
         <>
             <div className="updates">
-                <label className="header">Updates</label>
+                <label className="header">Updates : {customer?.updates?.length}</label>
                 {customer?.updates
                     ? customer.updates.map((update) => {
                           return (
