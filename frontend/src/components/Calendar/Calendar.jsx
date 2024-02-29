@@ -8,9 +8,9 @@ import { Calendar as CalendarComp } from '@natscale/react-calendar';
 const HIDDEN = 'hidden'
 const VISIABLE = 'visiable'
 
-const Calendar = ({setTime , label='start'}) => {
+const Calendar = ({date, setTime , label='start' , isDisabled=false}) => {
     const [visibility , setVisibility] = useState(HIDDEN);
-    const [value, setValue] = useState(new Date());
+    const [value, setValue] = useState(date ? new Date(date)  : new Date());
 
     const onClick = (e)=>{
         if (visibility === HIDDEN){
@@ -21,10 +21,10 @@ const Calendar = ({setTime , label='start'}) => {
     }
     const onChange = useCallback(
         (val) => {
-          setValue(val);
+          setValue(val.toLocaleDateString());
           setVisibility(HIDDEN)
           if (setTime){
-            setTime(val.toISOString())
+            setTime(val.toLocaleDateString())
             // console.log(val , 'calendar')
           }
           
@@ -33,12 +33,12 @@ const Calendar = ({setTime , label='start'}) => {
       );
     
     return (
-        <div className='calendar'>
+        <div className='calendar' disabled={isDisabled}>
             <div>
                 <label>{label} :</label>
-                <button type="text" onClick={onClick}>{getDate(value.toUTCString(),false)}</button>
+                <button type="text" onClick={onClick} disabled={isDisabled}>{getDate(value,false)}</button>
             </div>
-            <div className='calendar-comp' >
+            <div className='calendar-comp'  disabled={isDisabled}>
                 {
                     visibility === HIDDEN ?
                     null :(

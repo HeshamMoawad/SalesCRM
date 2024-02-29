@@ -107,6 +107,8 @@
     border:1px solid var(--circle-light) ;
     border-radius: 10px;
     padding: 5px;
+    background-color: var(--background-color);
+    top: 60vh;
 }
 
 .rc_root.rc_dual .rc+.rc {
