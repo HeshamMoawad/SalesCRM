@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import MainLayout from "../../Layout/MainLayout";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Pageination from "../../components/Pageination/Pageination";
@@ -11,7 +11,9 @@ import DataNotFound from "../../components/DataNotFound/DataNotFound";
 
 const Subscriptions = () => {
     const { permission } = usePermission();
-    const { loading, subscriptions, setSearch } = useSubscriptionsFetcher();
+    const [hasMore , setHasMore] = useState({next:null , prev:null , count:0});
+    const [currentPage , setCurrentPage] = useState(1);
+    const { loading, subscriptions, setSearch } = useSubscriptionsFetcher(currentPage , setHasMore);
     return (
         <MainLayout
             initToggle={{
@@ -39,10 +41,9 @@ const Subscriptions = () => {
                     ) : (
                         <DataNotFound />
                     )}
-
                     {/* <Loading/> */}
                 </div>
-                <Pageination />
+                <Pageination  currentPage={currentPage} hasMore={hasMore} setCurrentPage={setCurrentPage}/>
             </div>
         </MainLayout>
     );
