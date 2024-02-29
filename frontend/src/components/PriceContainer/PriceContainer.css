@@ -13,7 +13,9 @@
     margin: 5px;
 }
 
-input.remaining-pay{
+input.remaining-pay , 
+.price-container input:disabled
+{
     /* background-color: red; */
     border: none;
     border: 1px solid gray;
