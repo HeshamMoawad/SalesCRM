@@ -41,7 +41,8 @@ const Axios = axios.create({
           await Swal.fire({
               title:"success" ,
               text: String(response.data.message) ,
-              icon:'info',
+              icon:'success',
+              
           })
         }
         return response;
