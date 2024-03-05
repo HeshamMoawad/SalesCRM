@@ -1,20 +1,19 @@
 import React from "react";
 import "./DCard.css";
-import logo from "../../../assets/icons/sales-blue.jpg";
 
-const DCard = () => {
+const DCard = ({ logo, name , count}) => {
     
     return (
-        <div className="d-card container">
+        <div className="d-card">
             <div className="bg-img">
                 <img src={logo} alt="" />
             </div>
             <div className="txt">
                 <div className="header-txt">
-                    <span className="count">300k</span>
+                    <span className="count">{count}</span>
                 </div>
                 <div className="light-txt">
-                    <span className="name">sales</span>
+                    <span className="name">{name}</span>
                 </div>
             </div>
         </div>

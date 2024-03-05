@@ -10,6 +10,23 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 20px 0px;
+    margin: 10px 0px;
 
+}
+.dashboard-cards .row:nth-last-child(1){
+    margin-top: 30px;
+    flex-direction: column;
+}
+
+.end-label{
+    font-size: x-large;
+    margin-bottom: 30px;
+}
+
+.dashboard-cards .scrollable{
+    overflow-y: auto;
+    /* overflow-x: hidden; */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
 }
