@@ -66,9 +66,6 @@ export const useCSFetcher = ()=>{
         }else {
             fetchCS({});
         }
-
-
-        
     } , [])
     return {
         cs ,
@@ -98,7 +95,7 @@ export const saveNote = async (subscriptionId , data)=>{
     }else {
         await Swal.fire({
             title:"Faild" ,
-            text: response.data.message ,
+            text: response?.data?.message ,
             icon:'error',
         })
     }
@@ -107,3 +104,37 @@ export const saveNote = async (subscriptionId , data)=>{
     }
 }
 
+export const useAnalyticsFetcher = (project, otherFilter={})=>{
+    const {permission} = usePermission()
+    const [analytics , setAnalytics] = useState(null);
+    const fetchAnalytics = async(Name)=>{
+        const params =  Name === '' ? {...otherFilter} : {project:Name , ...otherFilter}
+        const response =  await request(
+                "/dashboard" , 
+                GET , 
+                [false,false] , 
+                params , 
+                {} ,
+                )
+        if (response?.data){
+            setAnalytics(response.data)
+        } else {
+            await Swal.fire({
+                title:"Faild" ,
+                text: response?.data?.message ,
+                icon:'error',
+            })
+            }
+    }
+    useEffect(()=>{
+        if (permission.role === MANAGER){
+            fetchAnalytics(project);
+        }else {
+            fetchAnalytics('');
+        }
+    } , [project])
+    return {
+        fetchAnalytics ,
+        analytics
+    }
+}

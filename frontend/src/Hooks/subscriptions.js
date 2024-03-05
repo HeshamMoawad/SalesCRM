@@ -105,6 +105,7 @@ export const useSubscriptionFetcher = (uuid) => {
 
 
 export const addSubscription = async (data,show = [false, false] )=>{
+    
     const response = await request(
         "/subscriptions",
         "POST",
@@ -122,11 +123,10 @@ export const addSubscription = async (data,show = [false, false] )=>{
         })
         window.location.pathname = '/subscriptions';
         console.log("true" , response)
-        // navigate("/customers")
     }else {
         await Swal.fire({
             title:"Faild" ,
-            text: response.data.message ,
+            text: response?.data?.message ,
             icon:'error',
         })
 
