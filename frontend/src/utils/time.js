@@ -26,3 +26,13 @@ export const getDaysBetweenDates = (startDate, endDate) =>{
     return daysDifference;
   }
   
+export const getStatus = (date , nowDate )=>{
+  const now = new Date(nowDate);
+  const passedDate = new Date(date)
+  // console.log(now.toDateString(),passedDate.toDateString() ,  now - passedDate , Math.floor( now - passedDate/ (1000 * 3600 * 24)));
+  // Calculate the difference in milliseconds
+  const differenceInMilliseconds =  passedDate - now  ;
+  // Convert the difference from milliseconds to days
+  const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 3600 * 24));
+  return differenceInDays + 1 ;
+}

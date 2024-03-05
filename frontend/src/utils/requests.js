@@ -13,7 +13,8 @@ function range(start, end) {
 const SUCCESS_STATUS_CODES = range(200,300 );
 
 const Axios = axios.create({
-  baseURL:"http://192.168.3.141:8000/api/",
+  // baseURL:"http://192.168.3.141:8000/api/",
+  baseURL:"/api/",
   withCredentials: true,
 })
 
