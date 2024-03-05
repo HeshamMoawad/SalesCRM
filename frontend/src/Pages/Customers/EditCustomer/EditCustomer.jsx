@@ -93,7 +93,7 @@ const EditCustomer = (props) => {
                                     </Link>
                                     <button className="save" onClick={()=>{saveEditedCustomer({uuid : customer.uuid,name : customer.name , phone : customer.phone})}}>save</button>
                                     <button className="save-add" onClick={async (e)=>{
-                                        await saveEditedCustomer({uuid : customer.uuid,name : customer.name , phone : customer.phone});
+                                        await saveEditedCustomer({uuid : customer.uuid,name : customer.name , phone : customer.phone} ,[false, true] , false );
                                         // navigate to add subscription
                                         navigate(`/subscriptions/add/${customer.uuid}`)
                                         }}>

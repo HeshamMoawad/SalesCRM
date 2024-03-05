@@ -32,13 +32,13 @@ const Customers = () => {
                 <div className="customers-card-container">
                     {loading ? (
                         <Loading />
-                    ) : customers.length > 0 ? (
+                    ) : customers?.length > 0 ? (
                         
                         customers.map((customer) => {
                             return (
                                 <Card
                                     role={permission.role}
-                                    key={customer.uuid}
+                                    key={customer?.uuid}
                                     data={customer}
                                 />
                             );
