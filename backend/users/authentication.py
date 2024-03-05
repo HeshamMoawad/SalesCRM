@@ -19,5 +19,20 @@ class CookieAuthentication(JWTAuthentication):
 
         return (user, validated_token)
 
+class HeaderAuthentication(JWTAuthentication):
+    def authenticate(self, request:HttpRequest):
+        # Get the token from the cookie
+        token = request.headers.get(settings.SIMPLE_JWT["AUTH_HEADER"])
+        if token is None:
+            return None
+        try:
+            # Validate the token and retrieve user
+            validated_token = self.get_validated_token(token)
+            user = self.get_user(validated_token)
+        except AuthenticationFailed:
+            return None
+
+        return (user, validated_token)
+
 
 
