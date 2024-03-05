@@ -13,6 +13,11 @@ import {
 } from "../../../Hooks/subscriptions";
 import Updates from "../../../components/Updates/Updates";
 import Notes from "../../../components/Notes/Notes";
+import Deuration from "../../../components/Deuration/Deuration";
+import {DEURATION_VALIDATION} from "../../../utils";
+import Swal from "sweetalert2";
+
+
 
 const EditSubscription = ({ isDisabled = false }) => {
     const { subscriptionId } = useParams();
@@ -27,15 +32,16 @@ const EditSubscription = ({ isDisabled = false }) => {
         if (subscription) {
             // console.log( ,  , 'prices')
             setForm({
-                uuid: subscription.uuid,
-                cs: subscription.cs.username,
-                start_date: new Date(subscription.start_date).toLocaleDateString(),
-                end_date: new Date(subscription.end_date).toLocaleDateString(),
-                text: subscription.text,
+                uuid: subscription?.uuid,
+                cs: subscription?.cs?.username,
+                // start_date: new Date(subscription.start_date).toLocaleDateString(),
+                end_date: new Date(subscription?.end_date).toLocaleDateString(),
+                text: subscription?.text,
+                deuration : subscription?.deuration
             });
             setPrices({
-                price : subscription.price ,
-                collected_price : subscription.collected_price
+                price : subscription?.price ,
+                collected_price : subscription?.collected_price
             })
         }
     }, [subscription , loading]);
@@ -80,11 +86,21 @@ const EditSubscription = ({ isDisabled = false }) => {
                                     cols="30"
                                     rows="10"
                                     placeholder="Write any thing About Customer or Subscription ... "
-                                    value={form.text}
+                                    value={form?.text}
                                     onChange={writeHandler}
                                     disabled={isDisabled}
                                 ></textarea>
                             </div>
+                            <Deuration  
+                            isDisabled={isDisabled}
+                            value={form?.deuration}
+                            setDeuration={(value)=>{
+                                setForm({
+                                    ...form ,
+                                    deuration:value
+                                })
+                            }}/>
+
                             <PriceContainer
                                 isDisabled={isDisabled}
                                 setPrice={(value) => {
@@ -107,7 +123,7 @@ const EditSubscription = ({ isDisabled = false }) => {
                                     isDisabled={isDisabled}
                                     options={cs}
                                     defaultIndex={0}
-                                    initvalue={subscription.cs.username}
+                                    initvalue={subscription?.cs?.username}
                                     child={<label htmlFor="phone">CS : </label>}
                                     setSelection={(value) => {
                                         setForm((prev) => {
@@ -118,16 +134,17 @@ const EditSubscription = ({ isDisabled = false }) => {
                             </div>
                             <CalendarGroup
                                 isDisabled={isDisabled}
+                                isDisabledStart={true}
                                 start_date={new Date(
-                                    subscription.start_date
+                                    subscription?.start_date
                                 ).toLocaleDateString()}
                                 end_date={new Date(
-                                    subscription.end_date
+                                    subscription?.end_date
                                 ).toLocaleDateString()}
                                 setDateFrom={(value) => {
-                                    setForm((prev) => {
-                                        return { ...prev, start_date: value };
-                                    });
+                                    // setForm((prev) => {
+                                    //     return { ...prev }; 
+                                    // });
                                 }}
                                 setDateTo={(value) => {
                                     setForm((prev) => {
@@ -145,10 +162,33 @@ const EditSubscription = ({ isDisabled = false }) => {
                                     <button
                                         className="save"
                                         onClick={async () => {
-                                            await saveEditedSubscription({
-                                                ...form, ...prices
-                                            });
-                                            // console.log({...form , ...date , ...prices})
+                                            // console.log({...form  , ...prices })
+                                            console.log(form , DEURATION_VALIDATION.test(form?.deuration) , form?.deuration  )
+                                            if (+prices.price <= 0 ){
+                                                await Swal.fire({
+                                                    title:"Validation Error" ,
+                                                    text: 'الرجاء كتابة سعر الاشتراك' ,
+                                                    icon:'error',
+                                                })
+
+                                            }else if (!DEURATION_VALIDATION.test(form?.deuration) | form?.deuration === '' | form?.deuration === undefined){
+                                                await Swal.fire({
+                                                    title:"Validation Error" ,
+                                                    text: 'الرجاء كتابة مدة الاشتراك' ,
+                                                    icon:'error',
+                                                })
+
+                                            }else if (+prices.collected_price <= 0){
+                                                await Swal.fire({
+                                                    title:"Validation Error" ,
+                                                    text: 'الرجاء اخذ مبلغ من العميل' ,
+                                                    icon:'error',
+                                                })
+                                            
+                                            }else {
+                                                console.log({...form  , ...prices })
+                                                await saveEditedSubscription({...form ,  ...prices })
+                                            }
                                         }}
                                     >
                                         save

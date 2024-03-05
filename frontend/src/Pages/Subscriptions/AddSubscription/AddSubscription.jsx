@@ -10,6 +10,10 @@ import CustomSelection from "../../../components/CustomSelection/CustomSelection
 import { useCSFetcher } from "../../../Hooks/fetchers";
 import { addSubscription } from "../../../Hooks/subscriptions";
 import { getDate } from "../../../utils/time";
+import {DEURATION_VALIDATION} from "../../../utils";
+
+import Deuration from "../../../components/Deuration/Deuration";
+import Swal from "sweetalert2";
 
 
 const AddSubscription = () => {
@@ -37,12 +41,12 @@ const AddSubscription = () => {
             [e.target.name] : e.target.value
         })
     }
-    useEffect(()=>{
-        console.log(form , 'form')
-        console.log(date , 'date')
-        console.log(prices , 'prices')
+    // useEffect(()=>{
+    //     console.log(form , 'form')
+    //     console.log(date , 'date')
+    //     console.log(prices , 'prices')
 
-    },[form ,date , prices])
+    // },[form ,date , prices])
 
     return (
         <MainLayout
@@ -59,37 +63,53 @@ const AddSubscription = () => {
                         <div className="name">Name : {customer.name}</div>
                         <div className="phone">Phone : {customer.phone}</div>
                     </div>
-
-
                 ) : (
                     <DataNotFound/>
                 )}
-                <div className="add-subscription-body">
+                <div className="add-subscription-body" style={{
+                    justifyContent:'space-around'
+                }}>
                     {customer ? (
                         <>
                         <div className="text">
-                            <label>Subscription Text</label>
+                            <label>التفاصيل</label>
                             <textarea 
                             name="text" 
                             id="" 
                             cols="30" 
                             rows="10" 
-                            placeholder="Write any thing About Customer or Subscription ... "
+                            placeholder="...اكتب تفاصيل الاشتراك "
                             onChange={writeHandler}
                             > 
                             </textarea>
                         </div>
+                        <Deuration  
+                        value={form?.deuration}
+                        setDeuration={(value)=>{
+                            setForm(formPrev => {
+                                return {
+                                ...formPrev ,
+                                deuration:value
+                                }
+                            })
+                            
+                        }}/>
                         <PriceContainer
                         setPrice={(value)=>{
-                            setPrices({
-                                ...prices ,
-                                price:value
+
+                            setPrices(pricesPrev => {
+                                return {
+                                    ...pricesPrev ,
+                                    price:value
+                                }
                             })
                         }}
                         setCollected={(value)=>{
-                            setPrices({
-                                ...prices ,
-                                collected_price:value
+                            setPrices(pricesPrev => {
+                                return {
+                                    ...pricesPrev ,
+                                    collected_price:value
+                                }
                             })
                         }}
                         prices = {prices}
@@ -100,17 +120,19 @@ const AddSubscription = () => {
                                 defaultIndex={0} 
                                 child={(<label htmlFor="phone">CS : </label>)}
                                 setSelection = {(value)=>{
-                                    setForm({
-                                        ...form ,
+                                    setForm(formPrev => {
+                                        return {
+                                        ...formPrev ,
                                         cs:value
+                                        }
                                     })
                                 }}
                                 />
                         </div>
                         {/* <Calendar/> */}
                         <CalendarGroup
-                        start_date={date.start_date}
-                        end_date={date.end_date}
+                        start_date={date?.start_date}
+                        end_date={date?.end_date}
                         setDateFrom={(value)=>{
                             setDate(prev =>{
                                 return{...prev ,start_date : value}
@@ -127,8 +149,41 @@ const AddSubscription = () => {
                             <button className="cancel">cancel</button>
                             </Link>
                             <button className="save" onClick={async ()=>{
-                                await addSubscription({...form , ...prices , ...date,   customer_uuid:customer.uuid})
-                                console.log({...form , ...date , ...prices  , customer_uuid:customer.uuid})
+                                // console.log(form , DEURATION_VALIDATION.test(form.deuration) ,form.deuration  )
+                                if (+prices.price <= 0 ){
+                                    await Swal.fire({
+                                        title:"Validation Error" ,
+                                        text: 'الرجاء كتابة سعر الاشتراك' ,
+                                        icon:'error',
+                                    })
+
+                                }else if (!DEURATION_VALIDATION.test(form?.deuration) | form?.deuration === '' | form?.deuration === undefined){
+                                    await Swal.fire({
+                                        title:"Validation Error" ,
+                                        text: 'الرجاء كتابة مدة الاشتراك' ,
+                                        icon:'error',
+                                    })
+
+                                }else if (+prices?.collected_price <= 0){
+                                    await Swal.fire({
+                                        title:"Validation Error" ,
+                                        text: 'الرجاء اخذ مبلغ من العميل' ,
+                                        icon:'error',
+                                    })
+                                
+                                }else if (date?.start_date === date?.end_date){
+                                    await Swal.fire({
+                                        title:"Validation Error" ,
+                                        text: 'الرجاء التاكد من زمن الاشتراك' ,
+                                        icon:'error',
+                                    })
+                                }
+                                else {
+                                    console.log({...form , ...date , ...prices  , customer_uuid:customer?.uuid})
+
+                                    await addSubscription({...form , ...date,  ...prices ,  customer_uuid:customer?.uuid})
+
+                                }
                             }}>save</button>
                         </div>
                         </>

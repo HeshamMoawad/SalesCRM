@@ -69,6 +69,7 @@
 }
 .add-subscription-body textarea::placeholder{
     text-align: center;
+    color:white;
 }
 .add-subscription-body textarea:disabled{
     border: 1px solid gray;
