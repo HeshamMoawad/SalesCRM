@@ -31,7 +31,7 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS")
 
-APPEND_SLASH = False
+# APPEND_SLASH = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,6 +65,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'home.csrf_middleware.DisableCSRFMiddleware'
+
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -158,7 +161,8 @@ REST_FRAMEWORK = {
     ) ,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'users.authentication.CookieAuthentication'
+        'users.authentication.CookieAuthentication',
+        'users.authentication.HeaderAuthentication'
     ],
 
     # 'DEFAULT_PERMISSION_CLASSES': [
@@ -169,7 +173,14 @@ REST_FRAMEWORK = {
 
 # jwt Config
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=3),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=20),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'AUTH_COOKIE': 'Authorization',
+    'AUTH_HEADER': 'Authorization',
+    
 }
+
+# CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS")]
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
