@@ -8,14 +8,14 @@ const Updates = ({customer}) => {
             <div className="updates">
                 <label className="header">Updates : {customer?.updates?.length}</label>
                 {customer?.updates
-                    ? customer.updates.map((update) => {
+                    ? customer?.updates.map((update) => {
                           return (
                               <div className="update">
                                   <label htmlFor="name">
-                                      Updated by: {update.user?.username}{" "}
+                                      Updated by: {update?.user?.username}{" "}
                                   </label>
                                   <label htmlFor="by">
-                                      Updated at : {getDate(update.created_at)}
+                                      Updated at : {getDate(update?.created_at)}
                                   </label>
                               </div>
                           );

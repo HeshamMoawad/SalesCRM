@@ -28,15 +28,15 @@ const PriceContainer = ({setPrice , setCollected , prices , isDisabled=false}) =
     return (
         <div className='price-container' disabled={isDisabled}>
             <div className="price">
-                <label htmlFor="price">Subscription Price :</label>
+                <label htmlFor="price">سعر الاشتراك </label>
                 <input type="number" disabled={isDisabled} name='price' className='price' ref={priceRef} onChange={changePriceHandler} value={prices.price}/>
             </div>
             <div className="collected-price">
-                <label htmlFor="price">Collected :</label>
+                <label htmlFor="price">المبلغ المحصل</label>
                 <input type="number" disabled={isDisabled} name='collected_price' ref={collectedRef} onChange={changePriceHandler} className='collected-price' value={prices.collected_price}/>
             </div>
             <div className="remaining-pay " >
-                <label htmlFor="price">Remaining to Pay :</label>
+                <label htmlFor="price">المتبقى</label>
                 <input type="number" disabled={isDisabled} className='remaining-pay' value={remaining}/>
             </div>
 

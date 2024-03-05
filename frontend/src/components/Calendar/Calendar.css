@@ -95,22 +95,32 @@
 
 .rc_root {
     background-color: var(--rc-color-bg-light);
-    border: 1px solid var(--rc-color-border-root);
+    /* border: 1px solid var(--rc-color-border-root); */
     border-radius: 8px;
     font-size: 1rem;
     margin-top: 1%;
 }
 
-.rc,
-.rc_root {
-    position: fixed;
+.rc{
+    position: relative;
     border:1px solid var(--circle-light) ;
     border-radius: 10px;
     padding: 5px;
     background-color: var(--background-color);
-    top: 60vh;
-}
+    margin: 10px;
 
+    /* top: 60vh; */
+}
+.rc_root{
+    position: relative;
+    /* border:1px solid var(--circle-light) ; */
+    border-radius: 10px;
+    /* padding: 5px; */
+    background-color: transparent;
+    /* margin: 5px; */
+    outline: none;
+
+}
 .rc_root.rc_dual .rc+.rc {
     margin-left: 12px
 }

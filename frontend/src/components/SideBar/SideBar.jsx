@@ -38,7 +38,7 @@ const SideBar = (props) => {
 
     return (
         <div className="sidebar">
-            <SideHeader name={auth.first_name} project={auth.project.name} logo={auth.project.logo} role={permission.role}/>
+            <SideHeader name={auth?.first_name} project={auth?.project?.name} logo={auth?.project?.logo} role={permission?.role}/>
             <div className="content">
                 {Object.entries(toggled).map(([key, value]) => (
                     <SideButton

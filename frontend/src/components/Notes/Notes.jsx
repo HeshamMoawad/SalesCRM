@@ -9,14 +9,14 @@ const Notes = ({ subscriptionId, isDisabled = false }) => {
     const [newNote, setNewNote] = useState("");
     return (
         <div className="notes">
-            <label className="header">Notes : {notes.length}</label>
-            {notes.length > 0
+            <label className="header">Notes : {notes?.length}</label>
+            {notes?.length > 0
                 ? notes.map((note) => {
                       return (
                           <div className="note">
-                              <label htmlFor="note">Note : {note.note}</label>
+                              <label htmlFor="note">Note : {note?.note}</label>
                               <label htmlFor="by">
-                                  Noted at : {getDate(note.created_at)}
+                                  Noted at : {getDate(note?.created_at)}
                               </label>
                               <label htmlFor="name">
                                   Noted by: {note?.creator?.username}{" "}

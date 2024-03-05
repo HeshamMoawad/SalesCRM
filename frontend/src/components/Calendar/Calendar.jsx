@@ -35,8 +35,8 @@ const Calendar = ({date, setTime , label='start' , isDisabled=false}) => {
     return (
         <div className='calendar' disabled={isDisabled}>
             <div>
-                <label>{label} :</label>
                 <button type="text" onClick={onClick} disabled={isDisabled}>{getDate(value,false)}</button>
+                <label> : {label}</label>
             </div>
             <div className='calendar-comp'  disabled={isDisabled}>
                 {
