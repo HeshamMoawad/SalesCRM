@@ -4,31 +4,47 @@ from rest_framework.status import  HTTP_401_UNAUTHORIZED
 from rest_framework.request import Request
 from django.contrib.auth import  authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from utils.users import get_user_from_request , BaseUser
 from ..api.serializers import UserSerializer
 from .constants import (
     AUTH_COOKIE ,
     SESSION_ID ,
-    CSRF_TOKEN
+    CSRF_TOKEN , 
+    EXPIRE
 )
+import datetime
 
 @api_view(["POST"])
 def loginView(request: Request):
-    credentials = request.data.copy()
-    if "username" in credentials.keys() and "password" in credentials.keys():
-        user = authenticate(request, username=credentials['username'] , password=credentials['password'])
-        if user :
-            token: RefreshToken = RefreshToken.for_user(user)
-            serializer_user = UserSerializer(user)
-            data = serializer_user.data
-            data.update({"token":f"{token.access_token}"})
-            response = Response(serializer_user.data)
-            response.set_cookie(AUTH_COOKIE,token.access_token)
-            return response
-    return Response({
-        "message": f"faild to authenticate you",
-    },
-     HTTP_401_UNAUTHORIZED
-     )
+    user , token = get_user_from_request(request , token=True)
+    if isinstance(user , BaseUser):
+        serializer_user = UserSerializer(user)
+        data = serializer_user.data.copy()
+        data.update({AUTH_COOKIE:f"{token}"})
+        expiredate = datetime.datetime.utcfromtimestamp(token['exp']).isoformat()
+        data.update({EXPIRE:expiredate})
+        response = Response(data)
+        # response.set_cookie(AUTH_COOKIE,token)
+        return response
+    else :
+        credentials = request.data.copy()
+        if "username" in credentials.keys() and "password" in credentials.keys():
+            user = authenticate(request, username=credentials['username'] , password=credentials['password'])
+            if user :
+                token: RefreshToken = RefreshToken.for_user(user)
+                serializer_user = UserSerializer(user)
+                data = serializer_user.data.copy()
+                data.update({AUTH_COOKIE:f"{token.access_token}"})
+                expiredate = datetime.datetime.utcfromtimestamp(token.access_token['exp']).isoformat()
+                data.update({EXPIRE:expiredate})
+                response = Response(data)
+                # response.set_cookie(AUTH_COOKIE,token.access_token)
+                return response
+        return Response({
+            "message": f"faild to authenticate you",
+        },
+        HTTP_401_UNAUTHORIZED
+        )
 
 @api_view(["GET" , "POST"])
 def logoutView(request: Request):
