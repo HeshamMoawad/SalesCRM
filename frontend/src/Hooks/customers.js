@@ -104,7 +104,7 @@ export const useCustomerFetcher = (uuid) => {
     };
 } 
 
-export const saveEditedCustomer = async (data , show = [false, true])=>{
+export const saveEditedCustomer = async (data , show = [false, true] , reloadOnSuccess = true)=>{
     const response = await request(
         "/customers",
         "PUT",
@@ -121,11 +121,13 @@ export const saveEditedCustomer = async (data , show = [false, true])=>{
             timer: 1000
 
         })
-        window.location.reload();
+        if (reloadOnSuccess){
+            window.location.reload();
+        }
     }else {
         await Swal.fire({
             title:"Faild" ,
-            text: response.data.message ,
+            text: response?.data?.message ,
             icon:'error',
         })
         window.location.reload();
@@ -157,7 +159,7 @@ export const addNewCustomer = async (data , show = [false, true])=>{
     }else {
         await Swal.fire({
             title:"Faild" ,
-            text: response.data.message ,
+            text: response?.data?.message ,
             icon:'error',
         })
         // window.location.reload();
