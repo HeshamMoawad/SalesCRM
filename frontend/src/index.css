@@ -41,6 +41,9 @@ body {
   background-color: var(--second-background-color);
   border-radius: var(--border-radius);
   display: flex;
+  justify-content: space-around;
+  /* background-color: red; */
+  width: 50%;
 }
 
 
