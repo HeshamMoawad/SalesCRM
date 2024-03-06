@@ -160,3 +160,6 @@ cython_debug/
 #.idea/
 frontend/light.PNG
 frontend/src/test.css
+backend/media/*
+# backend/static/*
+backend.rar
