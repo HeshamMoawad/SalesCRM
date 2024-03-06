@@ -1,0 +1,37 @@
+.sidebar{
+    position: fixed;
+    height: 90vh;
+    width: 15vw;
+    top:5%;
+    left:3%;
+    background-color: var(--second-background-color);
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logout{
+    background-color: var(--circle-light);
+    position: absolute;
+    width:12vw;
+    height: 40px;
+    left: 10%;
+    bottom:3%;
+    border: 2px solid var(--circle-light);
+    background: transparent;
+    border-radius: 20px;
+}
+.logout:hover{
+    border: 2px solid var(--background-color);
+    background: var(--circle-light);
+    color: var(--background-color) ;
+
+}
+
+.sidebar .content::before {
+    display: flex;
+    content: "";
+    height: 8vh;
+    background-color: transparent;
+}

@@ -1,0 +1,18 @@
+.subscriptions-card-container{
+    position: absolute;
+    height: 70vh;
+    /* max-height: auto; */
+    width: 76.05vw;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    /* border: 1px solid red; */
+    /* border-radius: 20px; */
+    /* background-color: var(--background-color); */
+    bottom: 5vh;
+    left: -0.09%;
+
+
+}

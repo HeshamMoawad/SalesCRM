@@ -1,0 +1,31 @@
+.deuration{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.deuration input{
+    background-color: transparent;
+    border: 1px solid var(--circle-light);
+    border-radius: 10px;
+
+}
+.deuration input::placeholder{
+    text-align: center;
+    color: white;
+    opacity: 0.6;
+    font-size: medium;
+
+}
+.deuration :is(label,input){
+    margin: 5px;
+    text-align: right;
+    padding: 5px;
+
+}
+.deuration :is(label,input):disabled{
+    border: 1px solid gray;
+    outline: none;
+
+}

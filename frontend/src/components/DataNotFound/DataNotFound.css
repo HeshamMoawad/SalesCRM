@@ -1,0 +1,11 @@
+.not-found{
+    border: 1px solid orange;
+    width: 80%;
+    text-align: center;
+    text-justify: newspaper;
+    margin-top: 5%;
+    height: 10%;
+    padding-top: 2%;
+    font-size: xx-large;
+    border-radius: 20px;
+}

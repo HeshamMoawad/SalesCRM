@@ -1,0 +1,22 @@
+.price-container{
+    display: flex;
+    margin-top: 1%;
+
+}
+.price-container input{
+    width: 20vw ;
+    height: 4vh;
+    border-radius: 20px;
+    border: 2px solid var(--circle-light);
+    background-color: transparent;
+    text-align: center;
+    margin: 5px;
+}
+
+input.remaining-pay , 
+.price-container input:disabled
+{
+    /* background-color: red; */
+    border: none;
+    border: 1px solid gray;
+}

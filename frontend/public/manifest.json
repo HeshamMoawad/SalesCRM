@@ -1,0 +1,11 @@
+{
+  "short_name": "Sales CRM",
+  "name": "El Alamia Sales CRM",
+  "icons": [
+    
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

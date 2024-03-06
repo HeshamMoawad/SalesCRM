@@ -1,0 +1,39 @@
+.side-header{
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-between;
+    border-top-right-radius: var(--border-radius);
+    border-top-left-radius: var(--border-radius);
+    width: 13vw;
+    height: fit-content;
+    padding: 25px 15px 25px 20px ;
+}
+.side-header > img{
+    background-color:var(--circle-light);
+    width: 5vw;
+    height: 8vh;
+    min-width: 5vw;
+    border-radius: 30%;
+}
+.side-header > div{
+    width: fit-content;
+    height: fit-content;
+    margin: auto auto auto 20px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.side-header > div .project{
+    opacity: 0.5;
+    font-size: medium;
+
+}
+.side-header > div .role{
+    font-size: small;
+}
+.side-header > div .name{
+    font-size: medium;
+    
+}
+
+
